@@ -1,0 +1,202 @@
+# === WEHTTAMSNAPS GHOSTTY CONFIGURATION ===
+# GitHub: https://github.com/Crowdrocker
+# Modern terminal with Fira Code font and system theming
+
+# Font configuration
+font-family = Fira Code
+font-size = 14
+font-weight = 500
+font-style = normal
+font-variation = "wght" 500
+
+# Fallback fonts
+font-family = Fira Code, "Noto Sans Mono", "Symbols Nerd Font Mono", monospace
+
+# Terminal dimensions
+columns = 120
+rows = 30
+
+# Window configuration
+window-width = 1200
+window-height = 700
+window-x = 100
+window-y = 100
+window-decoration = false
+window-inherit-working-directory = true
+window-save-state = true
+window-theme = auto
+
+# Colors (system theme integration)
+theme = light
+# Use dark theme by default
+theme = dark
+
+# Custom WehttamSnaps color scheme
+background = 0x1a1b26
+foreground = 0xc0caf5
+cursor = 0xc0caf5
+
+# Black
+color-0 = 0x15161e
+color-8 = 0x414868
+
+# Red
+color-1 = 0xf7768e
+color-9 = 0xff7a93
+
+# Green
+color-2 = 0x9ece6a
+color-10 = 0xb9f27c
+
+# Yellow
+color-3 = 0xe0af68
+color-11 = 0xff9e64
+
+# Blue
+color-4 = 0x7aa2f7
+color-12 = 0x7dcfff
+
+# Magenta
+color-5 = 0xbb9af7
+color-13 = 0xbb9af7
+
+# Cyan
+color-6 = 0x7dcfff
+color-14 = 0x7dcfff
+
+# White
+color-7 = 0xa9b1d6
+color-15 = 0xc0caf5
+
+# Cursor settings
+cursor-style = block
+cursor-style-blink = true
+cursor-invert-fg-bg = true
+cursor-text = background
+cursor-color = foreground
+
+# Selection
+selection-background = 0x565f89
+selection-foreground = foreground
+
+# Bell
+audible-bell = false
+visual-bell = false
+
+# Scrolling
+scrollback-limit = 10000
+scroll-on-output = false
+scroll-on-input = true
+scroll-on-keypress = true
+mouse-scroll-accelleration = 1.0
+
+# Copy/Paste
+copy-on-select = false
+clipboard-read = true
+clipboard-write = true
+clipboard-paste-protection = true
+clipboard-paste-bracketed = true
+
+# Shell
+shell = /bin/zsh
+shell-login = false
+shell-arg = --login
+
+# Working directory
+working-directory = inherit
+
+# Environment
+term = xterm-256color
+term-variants = xterm-256color,xterm,screen
+
+# Key bindings
+key = ctrl+shift+c=copy_to_clipboard
+key = ctrl+shift+v=paste_from_clipboard
+key = ctrl+shift+t=new_window
+key = ctrl+shift+w=close_window
+key = ctrl+shift+q=close_tab
+key = ctrl+shift+n=new_tab
+key = ctrl+pageup=previous_tab
+key = ctrl+pagedown=next_tab
+key = ctrl+tab=next_tab
+key = ctrl+shift+tab=previous_tab
+key = f11=toggle_fullscreen
+
+# Font sizing
+key = ctrl+plus=increase_font_size
+key = ctrl+minus=decrease_font_size
+key = ctrl+0=reset_font_size
+
+# Search
+key = ctrl+f=find
+key = ctrl+g=find_next
+key = ctrl+shift+g=find_previous
+
+# Transparency
+background-opacity = 0.95
+window-opacity = 1.0
+
+# Blur (if supported)
+background-blur-radius = 0
+
+# Padding
+padding-x = 8
+padding-y = 8
+
+# Window dividers
+window-divider-width = 2
+window-divider-color = 0x565f89
+
+# Confirm before closing
+confirm-close-surface = false
+
+# Mouse
+mouse-hide-while-typing = true
+mouse-alt-cursor = false
+
+# Focus
+auto-click-window-focus = false
+click-through = false
+
+# Resize
+resize-mode = minimal
+
+# Performance
+gpu-acceleration = true
+max-fps = 144
+resize-delay = 10
+
+# Security
+allow-clipboard-write = true
+allow-clipboard-read = true
+
+# Integration
+# Enable shell integration for better experience
+shell-integration = enabled
+
+# Tab bar
+tab-bar-mode = auto
+tab-bar-edge = bottom
+tab-bar-style = powerline
+
+# URL detection
+url-launcher = xdg-open
+url-launchers = https:http:ftp:file:mailto:git:gopher:irc
+
+# Custom key bindings for WehttamSnaps workflow
+key = super+enter=new_window
+key = super+shift+enter=new_tab
+key = super+t=new_tab
+key = super+shift+t=toggle_transparency
+key = super+f=toggle_fullscreen
+
+# Performance optimizations
+buffer-width = 8192
+fps-limit = 144
+
+# Debug
+debug = false
+
+# WehttamSnaps branding
+# Professional terminal configuration optimized for development and gaming
+# GitHub: https://github.com/Crowdrocker

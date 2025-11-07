@@ -1,0 +1,223 @@
+/* === WEHTTAMSNAPS WAYBAR STYLE === */
+/* GitHub: https://github.com/Crowdrocker */
+/* Backup status bar styling */
+
+* {
+    border: none;
+    border-radius: 8px;
+    font-family: "Fira Code", "Symbols Nerd Font Mono", monospace;
+    font-weight: 500;
+    font-size: 13px;
+    min-height: 24px;
+}
+
+window#waybar {
+    background: rgba(26, 27, 38, 0.9);
+    border-bottom: 1px solid rgba(122, 162, 247, 0.3);
+    color: #c0caf5;
+}
+
+#custom-logo {
+    padding: 0 8px;
+    margin: 0 4px;
+    background: linear-gradient(135deg, #7aa2f7, #bb9af7);
+    color: #1a1b26;
+    font-weight: bold;
+}
+
+#workspaces {
+    background: rgba(86, 95, 137, 0.3);
+    margin: 0 4px;
+    border-radius: 8px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    margin: 0 2px;
+    color: #c0caf5;
+    background: transparent;
+    border-radius: 6px;
+}
+
+#workspaces button:hover {
+    background: rgba(122, 162, 247, 0.2);
+}
+
+#workspaces button.active {
+    background: rgba(122, 162, 247, 0.3);
+    color: #7dcfff;
+    border-radius: 6px;
+}
+
+#workspaces button.urgent {
+    background: rgba(247, 118, 142, 0.3);
+    color: #f7768e;
+}
+
+#window {
+    background: rgba(86, 95, 137, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #c0caf5;
+}
+
+#clock {
+    background: rgba(86, 95, 137, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #e0af68;
+}
+
+#custom-media {
+    background: rgba(86, 95, 137, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #9ece6a;
+}
+
+#tray {
+    background: rgba(86, 95, 137, 0.3);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 8px;
+}
+
+#network {
+    background: rgba(86, 95, 137, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #9ece6a;
+}
+
+#network.disconnected {
+    background: rgba(247, 118, 142, 0.3);
+    color: #f7768e;
+}
+
+#bluetooth {
+    background: rgba(86, 95, 137, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #bb9af7;
+}
+
+#bluetooth.disabled {
+    background: rgba(86, 95, 137, 0.3);
+    color: #565f89;
+}
+
+#pulseaudio {
+    background: rgba(86, 95, 137, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #7dcfff;
+}
+
+#pulseaudio.muted {
+    background: rgba(247, 118, 142, 0.3);
+    color: #f7768e;
+}
+
+#backlight {
+    background: rgba(86, 95, 137, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #e0af68;
+}
+
+#battery {
+    background: rgba(86, 95, 137, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #9ece6a;
+}
+
+#battery.charging {
+    background: rgba(158, 206, 106, 0.3);
+    color: #b9f27c;
+}
+
+#battery.warning {
+    background: rgba(224, 175, 104, 0.3);
+    color: #ff9e64;
+}
+
+#battery.critical {
+    background: rgba(247, 118, 142, 0.3);
+    color: #f7768e;
+}
+
+#gamemode {
+    background: rgba(158, 206, 106, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #9ece6a;
+}
+
+#custom-gamemode-toggle {
+    background: rgba(158, 206, 106, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #9ece6a;
+}
+
+#custom-gamemode-toggle.disabled {
+    background: rgba(86, 95, 137, 0.3);
+    color: #565f89;
+}
+
+#custom-keyhints {
+    background: rgba(187, 154, 247, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #bb9af7;
+}
+
+#custom-power {
+    background: rgba(247, 118, 142, 0.3);
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: #f7768e;
+}
+
+/* Tooltip styling */
+tooltip {
+    background: rgba(26, 27, 38, 0.95);
+    border: 1px solid rgba(122, 162, 247, 0.3);
+    border-radius: 8px;
+    color: #c0caf5;
+    font-family: "Fira Code", "Symbols Nerd Font Mono", monospace;
+    font-size: 12px;
+}
+
+/* Module hover effects */
+#custom-logo:hover,
+#workspaces button:hover,
+#window:hover,
+#clock:hover,
+#custom-media:hover,
+#tray:hover,
+#network:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#battery:hover,
+#gamemode:hover,
+#custom-gamemode-toggle:hover,
+#custom-keyhints:hover,
+#custom-power:hover {
+    background: rgba(122, 162, 247, 0.2);
+    transition: background 0.3s ease;
+}
