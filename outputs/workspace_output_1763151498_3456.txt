@@ -1,0 +1,49 @@
+.
+├── configs
+│   ├── ghostty
+│   │   └── config
+│   ├── niri
+│   │   ├── conf.d
+│   │   │   ├── 00-base.kdl
+│   │   │   ├── 10-input.kdl
+│   │   │   ├── 20-layout.kdl
+│   │   │   ├── 30-rules.kdl
+│   │   │   ├── 40-gaming.kdl
+│   │   │   ├── 50-keybinds.kdl
+│   │   │   ├── 60-autostart.kdl
+│   │   │   └── 99-overrides.kdl
+│   │   └── config.kdl
+│   ├── packages
+│   │   └── core-packages.txt
+│   ├── plymouth
+│   │   ├── wehttamsnaps.plymouth
+│   │   └── wehttamsnaps.script
+│   ├── scripts
+│   │   ├── audio-setup.sh
+│   │   ├── keyhints.sh
+│   │   ├── steam-launch-options.sh
+│   │   ├── toggle-gamemode.sh
+│   │   └── welcome.py
+│   └── webapps
+│       ├── discord.sh
+│       ├── music.sh
+│       ├── notion.sh
+│       ├── twitch.sh
+│       └── youtube.sh
+├── KeyHints_sh.txt
+├── My-Niri-Setup-Idea.md
+├── Noctalia-Docs.txt
+├── PROJECT_SUMMARY.md
+├── README.md
+├── VERSION
+├── install.sh
+├── logo.txt
+├── package.list.txt
+├── reactor.png
+├── todo.md
+├── verify-installation.sh
+├── welcome.txt
+├── ws-logo.png
+└── ws.png
+
+9 directories, 38 files

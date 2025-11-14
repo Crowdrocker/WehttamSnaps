@@ -1,222 +1,328 @@
-# WehttamSnaps - Professional Arch Linux Hyprland Setup
+# 🖥️ WehttamSnaps - Professional Arch Linux Niri Setup
 
-<div align="center">
+![WehttamSnaps Logo](assets/ws-logo.png)
 
-![WehttamSnaps Logo](assets/logos/ws-logo.png)
+> **WehttamSnaps** - A professional Arch Linux Niri configuration optimized for photography, gaming, and content creation on AMD hardware.
 
-**A professional, modular Arch Linux Hyprland configuration optimized for photography, gaming, and productivity**
+## 🎯 Overview
 
-[![GitHub](https://img.shields.io/badge/GitHub-Crowdrocker-blue?style=for-the-badge&logo=github)](https://github.com/Crowdrocker)
-[![Arch Linux](https://img.shields.io/badge/Arch_Linux-1793D1?style=for-the-badge&logo=arch-linux)](https://archlinux.org/)
-[![Hyprland](https://img.shields.io/badge/Hyprland-00AAFF?style=for-the-badge&logo=hyprland)](https://hyprland.org/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+WehttamSnaps combines the best elements from popular dotfiles while adding unique optimizations for creative professionals and gamers. Built on Niri (Wayland compositor) with Noctalia (Quickshell-based) for a modern, efficient workflow.
 
-</div>
+### 🌟 Key Features
 
-## ✨ Features
+- **🎮 Gaming Optimized**: RX 580 / AMD GPU tuned for maximum performance
+- **🛠️ Professional Modding**: SteamTinkerLaunch, Vortex, MO2, Wabbajack integration
+- **📸 Photography Workflow**: Darktable, RawTherapee, GIMP, Inkscape integration
+- **🎬 Content Creation**: OBS Studio, audio routing, streaming ready
+- **🚀 Modern Shell**: Noctalia (Quickshell) with custom widgets
+- **⚡ Performance**: Game mode, CPU governor controls, RAM optimization
+- **🎨 Professional Theme**: Consistent WehttamSnaps branding throughout
+- **🌐 WebApps**: Dedicated webapp launchers for distraction-free usage
 
-### 🎮 Gaming Optimized
-- **Steam integration** with optimized launch options
-- **Gamescope support** for improved performance
-- **AMD GPU optimization** (RX 580 friendly)
-- **Gamemode** integration for performance boosts
-- Fixes for common gaming crashes (Division 2, Cyberpunk)
+## 📋 System Requirements
 
-### 🖥️ Desktop Environment
-- **Hyprland** - Dynamic tiling Wayland compositor
-- **Noctalia Shell** - Modern Quickshell-based UI (primary)
-- **Waybar** - Backup status bar (optional)
-- **Ghostty** - Modern terminal with Fira Code font
-- **Modular configuration** with clean separation
+### ✅ Minimum Requirements
+- **OS**: Arch Linux (fresh install recommended)
+- **CPU**: Intel i5-4430 or equivalent
+- **GPU**: AMD RX 580 (primary) / NVIDIA GTX 1650 (secondary)
+- **RAM**: 16GB DDR3
+- **Storage**: 1TB SSD + 2x 120GB SSDs
 
-### 📸 Photography & Productivity
-- **Darktable** integration for photo editing
-- **GIMP** with optimized settings
-- **Custom webapps** for quick access to services
-- **Audio routing** via PipeWire + qpwgraph
-- **Professional theming** throughout
-
-### 🎨 Theming & Branding
-- **WehttamSnaps branding** throughout all configs
-- **Material Design 3** color schemes
-- **Plymouth theme** with animated logo
-- **Consistent GTK/Qt theming**
-- **Custom welcome application**
+### 🔧 Recommended Hardware
+- **Display**: 1920x1080 @ 60Hz (single monitor setup)
+- **Audio**: USB/3.5mm headset with microphone
+- **Input**: Gaming mouse + mechanical keyboard
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Arch Linux (fresh install recommended)
-- AMD GPU (RX 580) or NVIDIA (GTX 1650+)
-- Basic command line knowledge
-
-### Installation
+### 1. Install WehttamSnaps
 
 ```bash
 # Clone the repository
-git clone https://github.com/Crowdrocker/WehttamSnaps.git
-cd WehttamSnaps
+git clone https://github.com/Crowdrocker/wehttamsnaps.git
+cd wehttamsnaps
+
+# Make installer executable
+chmod +x install.sh
 
 # Run the installer
 ./install.sh
-
-# Reboot and enjoy!
-reboot
 ```
 
-### What Gets Installed
+### 2. Reboot and Select Niri
 
-#### Core System
-- `hyprland` - Wayland compositor
-- `noctalia-shell` - Modern shell
-- `ghostty` - Terminal emulator
-- `pipewire` - Audio system
-- `gamemode` - Gaming optimization
+After installation:
+1. Reboot your system
+2. Select **Niri** from your display manager (SDDM)
+3. Wait for the WehttamSnaps welcome app to start
 
-#### Desktop Applications
-- `ghostty` - Terminal (replaces kitty/thunar)
-- `rofi` - Application launcher
-- `firefox` - Web browser
-- `thunar` - File manager
-- `obs-studio` - Streaming/recording
+### 3. First-Time Configuration
 
-#### Gaming
-- `steam` - Gaming platform
-- `gamescope` - Performance enhancer
-- `lutris` - Game launcher
-- `proton-ge-custom` - Steam compatibility
+The welcome app will guide you through:
+- Theme selection
+- Audio setup
+- Gaming configuration
+- Photography workflow setup
 
-#### Photography
-- `darktable` - Photo editing
-- `gimp` - Image manipulation
-- `rawtherapee` - RAW processing
+## 🎮 Gaming Configuration
 
-## 📁 Configuration Structure
+### RX 580 Optimizations
 
-```
-WehttamSnaps/
-├── configs/
-│   ├── hyprland/           # Hyprland configuration
-│   │   ├── hypr.conf        # Main config file
-│   │   └── conf.d/          # Modular configs
-│   ├── ghostty/             # Ghostty terminal config
-│   ├── noctalia/            # Noctalia shell configs
-│   ├── waybar/              # Waybar backup bar
-│   ├── webapps/             # Web application configs
-│   └── scripts/             # Utility scripts
-├── themes/                  # Theme files
-│   ├── gtk/                 # GTK themes
-│   ├── qt/                  # Qt themes
-│   └── plymouth/            # Boot theme
-├── packages/                # Package lists
-├── wallpapers/              # Wallpaper collection
-├── assets/                  # Assets and media
-│   ├── logos/               # Brand assets
-│   ├── sounds/              # Audio files
-│   └── fonts/               # Font files
-└── docs/                    # Documentation
-```
-
-## 🎮 Gaming Setup
-
-### Steam Optimization
 ```bash
-# Steam launch options for better performance
-RADV_PERFTEST=aco %command%
+# Enable gaming mode
+Super + Shift + G
+
+# GPU control panel
+Super + Ctrl + G
+
+# Start Steam
+Super + Shift + S
+
+# Launch with Gamescope
+Super + Alt + G
 ```
 
-### Gamescope Integration
+### Game Launch Options
+
+**Cyberpunk 2077:**
+```
+gamemoderun %command% -vulkan -fullscreen
+```
+
+**The Division 2:**
+```
+gamemoderun %command% -force-vulkan
+```
+
+### Performance Tips
+
+1. **Enable Game Mode** - Disables animations, sets CPU to performance
+2. **Use Gamescope** - Better performance and compatibility
+3. **Close background apps** - Free up RAM and GPU resources
+4. **Update drivers** - Keep Mesa and AMDGPU packages current
+
+## 📸 Photography Workflow
+
+### Keybinds for Photography
+
+| Function | Keybind | Application |
+|----------|---------|-------------|
+| Darktable | `Super + Shift + D` | Photo editing |
+| RawTherapee | `Super + Shift + R` | RAW processing |
+| GIMP | `Super + Shift + G` | Image editing |
+| Inkscape | `Super + Shift + I` | Vector graphics |
+| File Manager | `Super + F` | Thunar |
+| Color Picker | `Super + C` | Hyprpicker |
+
+### Color Management
+
+- **Display Calibration**: Use `dispwin` with custom ICC profiles
+- **Print Preparation**: GIMP with soft proofing enabled
+- **RAW Processing**: RawTherapee for batch processing
+- **Final Editing**: Darktable for non-destructive workflow
+
+## 🛠️ Professional Modding Integration
+
+WehttamSnaps includes comprehensive modding support for Steam games with optimized workflows:
+
+### Supported Modding Tools
+
+- **SteamTinkerLaunch** - `Super + Shift + T` (Advanced Steam management)
+- **Vortex** - `Super + Shift + V` (User-friendly mod manager)
+- **Mod Organizer 2** - `Super + Shift + M` (Advanced mod management)
+- **Wabbajack** - `Super + Shift + W` (Automated modlist installer)
+- **LOOT** - `Super + Shift + L` (Load order optimization)
+
+### Modding Workspace Organization
+
+- **Workspace 3**: Modding Tools - `Super + Ctrl + 3`
+- **Workspace 4**: File Management - `Super + Ctrl + 4`
+- **Workspace 5**: Web Tools - `Super + Ctrl + 5`
+
+### Modding WebApps
+
+- **Nexus Mods** - `Super + Alt + N` (Mod browsing)
+- **Modding Discord** - `Super + Alt + D` (Community support)
+- **LOOT Web** - `Super + Alt + L` (Load order tool)
+- **Modding Wiki** - `Super + Alt + W` (Documentation)
+
+### Advanced Features
+
+- **Smart Game Launcher**: `Super + Ctrl + Shift + G`
+- **Mod Profile Switching**: `Super + Ctrl + Shift + S`
+- **Backup/Restore**: `Super + Ctrl + Shift + B/R`
+- **Modding Keybinds Help**: `Super + Shift + Alt + H`
+
+## 🌐 Web Applications
+
+WehttamSnaps includes optimized webapp launchers for distraction-free usage:
+
+### Available WebApps
+
+- **YouTube** - `Super + Shift + Y`
+- **Twitch** - `Super + Shift + T`
+- **Music** (YouTube Music) - `Super + Shift + M`
+- **Discord** - `Super + Shift + D`
+- **Notion** - `Super + Shift + N`
+
+### WebApp Benefits
+
+- **Isolated profiles** - No interference with main browser
+- **Optimized settings** - Hardware acceleration enabled
+- **Clean interface** - No browser chrome or distractions
+- **Independent windows** - Can be managed separately
+
+## 🎵 Audio & Streaming Setup
+
+### PipeWire Configuration
+
 ```bash
-# Launch games with Gamescope for better performance
-gamescope -w 1920 -h 1080 -f -- steam
+# Audio control center
+EasyEffects
+
+# Patchbay for routing
+Qpwgraph
+
+# Virtual sinks for streaming
+~/.config/wehttamsnaps/scripts/audio-setup.sh
 ```
 
-### Known Issues Fixed
-- **Division 2 crashes**: Vulkan driver fixes
-- **Cyberpunk issues**: Memory optimization
-- **AMD GPU**: Proper RADV configuration
+### Streaming Audio Routing
 
-## ⌨️ Keybindings
+1. **Game Audio** → Virtual sink "Game"
+2. **Microphone** → Virtual sink "Mic"
+3. **Music/Browser** → Virtual sink "Media"
+4. **Discord** → Virtual sink "Chat"
 
-### Essential Shortcuts
-| Keybind | Action |
-|---------|--------|
-| `SUPER + ENTER` | Open Ghostty terminal |
-| `SUPER + D` | Application launcher (rofi) |
-| `SUPER + B` | Web browser |
-| `SUPER + Q` | Close active window |
-| `SUPER + H` | Show keybindings help |
-| `SUPER + SHIFT + G` | Toggle gamemode |
-| `SUPER + W` | Wallpaper selector |
-| `PRINT` | Screenshot |
-| `CTRL + ALT + L` | Lock screen |
+Use Qpwgraph to connect these to your recording/monitoring setup.
 
-### Noctalia Shell Controls
-| Keybind | Action |
-|---------|--------|
-| `SUPER + SPACE` | Application launcher |
-| `SUPER + S` | Control center |
-| `SUPER + ,` | Settings |
-| `SUPER + V` | Clipboard history |
-| `SUPER + L` | Lock screen |
+## ⚙️ Configuration Files
 
-## 🔧 Customization
+### Directory Structure
 
-### Adding WebApps
-```bash
-# Create a new webapp
-./configs/scripts/create-webapp.sh "YouTube" "https://youtube.com"
+```
+~/.config/wehttamsnaps/
+├── scripts/          # Utility scripts
+├── webapps/          # Webapp launchers
+├── assets/          # Logos and themes
+├── themes/          # Custom themes
+└── wallpapers/      # Wallpaper collection
+
+~/.config/niri/
+├── config.kdl       # Main configuration
+└── conf.d/          # Modular configs
+    ├── 00-base.kdl
+    ├── 10-input.kdl
+    ├── 20-layout.kdl
+    ├── 30-rules.kdl
+    ├── 40-gaming.kdl
+    ├── 50-keybinds.kdl
+    └── 60-autostart.kdl
+
+~/.config/ghostty/
+└── config          # Terminal configuration
 ```
 
-### Custom Themes
-- Edit `configs/noctalia/themes/` for Noctalia themes
-- Modify `configs/hyprland/conf.d/20-theme.conf` for Hyprland theming
-- Use `configs/scripts/change-theme.sh` to switch themes
+### Customizing Your Setup
 
-### Audio Routing
-Use `qpwgraph` to set up audio routing for streaming:
-```bash
-# Launch audio routing GUI
-qpwgraph
-```
+1. **Edit keybinds**: `~/.config/niri/conf.d/50-keybinds.kdl`
+2. **Add window rules**: `~/.config/niri/conf.d/30-rules.kdl`
+3. **Modify autostart**: `~/.config/niri/conf.d/60-autostart.kdl`
+4. **Change theme**: Use Noctalia settings panel
 
-## 📊 Performance
-
-### System Requirements
-- **CPU**: Intel i5-4430 or better
-- **GPU**: AMD RX 580 / NVIDIA GTX 1650 or better
-- **RAM**: 8GB minimum, 16GB recommended
-- **Storage**: 50GB free space
-
-### Optimizations
-- ZRAM for swap compression
-- Auto-cpufreq for CPU scaling
-- Gamemode for gaming performance
-- PipeWire for low-latency audio
-
-## 🐛 Troubleshooting
+## 🛠️ Troubleshooting
 
 ### Common Issues
 
-#### Audio Issues
+**Games won't launch:**
+```bash
+# Check GameMode status
+gamemoded -s
+
+# Verify Vulkan support
+vulkaninfo
+
+# Update ProtonGE
+protonup-qt
+```
+
+**Audio not working:**
 ```bash
 # Restart PipeWire
 systemctl --user restart pipewire pipewire-pulse
+
+# Check devices
+pactl list sinks
+pactl list sources
 ```
 
-#### Display Issues
+**Display issues:**
 ```bash
-# Check Hyprland config
-hyprctl config reload
+# Check Niri config
+niri --verify-config
+
+# Restart compositor
+niri-msg action quit
 ```
 
-#### Gaming Issues
+### Performance Optimization
+
+**Enable ZRAM:**
 ```bash
-# Update GPU drivers
-sudo pacman -Syu amd-ucode mesa lib32-mesa
+sudo systemctl enable zram-generator
+sudo reboot
 ```
+
+**CPU governor:**
+```bash
+# Performance mode
+sudo cpupower frequency-set -g performance
+
+# Ondemand mode
+sudo cpupower frequency-set -g ondemand
+```
+
+**GPU tuning:**
+```bash
+# CoreCtrl for AMD GPUs
+corectrl
+
+# Monitor GPU usage
+nvtop
+```
+
+## 📚 Learning Resources
+
+### Documentation
+
+- [Niri Wiki](https://github.com/YaLTeR/niri/wiki)
+- [Noctalia Shell](https://github.com/noctalia-dev/noctalia-shell)
+- [Ghostty Terminal](https://github.com/mitchellh/ghostty)
+
+### Video Tutorials
+
+- [WehttamSnaps Setup Guide](https://youtube.com/@WehttamSnaps)
+- [Niri Configuration](https://youtube.com/@WehttamSnaps)
+- [Gaming on Linux](https://youtube.com/@WehttamSnaps)
+
+### Community
+
+- [GitHub Issues](https://github.com/Crowdrocker/wehttamsnaps/issues)
+- [Discord Server](https://discord.gg/wehttamsnaps)
+- [Reddit r/archlinux](https://reddit.com/r/archlinux)
 
 ## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+### Reporting Issues
+
+1. Check existing issues first
+2. Include system information
+3. Provide steps to reproduce
+4. Add relevant logs
+
+### Submitting Changes
 
 1. Fork the repository
 2. Create a feature branch
@@ -224,30 +330,34 @@ sudo pacman -Syu amd-ucode mesa lib32-mesa
 4. Test thoroughly
 5. Submit a pull request
 
+### Areas for Contribution
+
+- **New webapp launchers**
+- **Additional window rules**
+- **Performance optimizations**
+- **Documentation improvements**
+- **Theme variations**
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- **JaKooLit** - Inspiration for theming approach
-- **Omarchy** - Workflow and structure ideas
-- **Noctalia** - Modern shell framework
-- **Hyprland** - Amazing Wayland compositor
-- **Arch Linux** - Best Linux distribution
+- **JaKooLit** - Inspiration for theming structure
+- **Omarchy** - Workflow optimization ideas
+- **Noctalia Team** - Amazing Quickshell-based shell
+- **Niri Developer** - Excellent Wayland compositor
+- **Arch Linux Community** - Continuous support and innovation
 
 ## 📞 Support
 
-- **GitHub Issues**: [Create an issue](https://github.com/Crowdrocker/WehttamSnaps/issues)
-- **Discord**: Join the community server
-- **Email**: crowdrocker@proton.me
+- **GitHub**: [@Crowdrocker](https://github.com/Crowdrocker)
+- **YouTube**: [@WehttamSnaps](https://youtube.com/@WehttamSnaps)
+- **Email**: wehttamsnaps@example.com
 
 ---
 
-<div align="center">
+**Made with ❤️ for the Linux community**
 
-**Made with ❤️ by [Crowdrocker](https://github.com/Crowdrocker)**
-
-*"WehttamSnaps - Because your desktop should work for you, not against you"*
-
-</div>
+*If you find WehttamSnaps useful, please give it a ⭐ on GitHub and consider subscribing to my YouTube channel!*

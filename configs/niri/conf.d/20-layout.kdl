@@ -1,0 +1,45 @@
+// === WEHTTAMSNAPS - LAYOUT CONFIGURATION ===
+// Window management and layout preferences
+
+layout {
+    // Strut settings for panel space (Noctalia shell)
+    strut {
+        top 48
+    }
+    
+    // Window positioning rules
+    preset-window-widths {
+        proportion 0.25
+        proportion 0.33
+        proportion 0.5
+        proportion 0.66
+        proportion 0.75
+        fixed 800
+        fixed 1024
+        fixed 1280
+        fixed 1440
+    }
+    
+    // Column behavior
+    default-column-width {
+        proportion 0.5
+    }
+    
+    // Focus behavior
+    auto-tiling false
+    focus-ring {
+        width 4
+        inactive-color rgba(88, 91, 174, 0.3)
+        active-color rgba(88, 91, 174, 0.8)
+    }
+    
+    // Window borders
+    border {
+        width 2
+        inactive-color rgba(88, 91, 174, 0.5)
+        active-color rgba(88, 91, 174, 0.9)
+    }
+}
+
+// Workspace configuration
+spawn-at-startup "workspace" "1"  // Start on workspace 1

@@ -1,0 +1,30 @@
+# 🖥️ WehttamSnaps - Professional Arch Linux Niri Setup
+
+![WehttamSnaps Logo](assets/ws-logo.png)
+
+> **WehttamSnaps** - A professional Arch Linux Niri configuration optimized for photography, gaming, and content creation on AMD hardware.
+
+## 🎯 Overview
+
+WehttamSnaps combines the best elements from popular dotfiles while adding unique optimizations for creative professionals and gamers. Built on Niri (Wayland compositor) with Noctalia (Quickshell-based) for a modern, efficient workflow.
+
+### 🌟 Key Features
+
+- **🎮 Gaming Optimized**: RX 580 / AMD GPU tuned for maximum performance
+- **📸 Photography Workflow**: Darktable, RawTherapee, GIMP, Inkscape integration
+- **🎬 Content Creation**: OBS Studio, audio routing, streaming ready
+- **🚀 Modern Shell**: Noctalia (Quickshell) with custom widgets
+- **⚡ Performance**: Game mode, CPU governor controls, RAM optimization
+- **🎨 Professional Theme**: Consistent WehttamSnaps branding throughout
+- **🌐 WebApps**: Dedicated webapp launchers for distraction-free usage
+
+## 📋 System Requirements
+
+### ✅ Minimum Requirements
+- **OS**: Arch Linux (fresh install recommended)
+- **CPU**: Intel i5-4430 or equivalent
+- **GPU**: AMD RX 580 (primary) / NVIDIA GTX 1650 (secondary)
+- **RAM**: 16GB DDR3
+- **Storage**: 1TB SSD + 2x 120GB SSDs
+
+### 🔧 Recommended Hardware

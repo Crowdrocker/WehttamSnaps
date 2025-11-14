@@ -1,0 +1,62 @@
+# WehttamSnaps - Core Arch Linux Niri Setup
+# Optimized package list for RX 580, photography, gaming, and content creation
+
+# === BASE SYSTEM ===
+base base-devel linux-cachyos-lts linux-cachyos-lts-headers linux-firmware
+amd-ucode reflector mkinitcpio mkinitcpio-numlock zram-generator
+
+# === WAYLAND COMPOSITOR ===
+niri uwsm
+hyprlock hyprpaper hyprshot hyprpicker hyprpolkitagent
+sddm sddm-sugar-candy-git
+
+# === SHELL & TERMINAL ===
+noctalia-shell quickshell
+ghostty
+zsh starship fastfetch
+fzf ripgrep fd eza bat
+
+# === AUDIO & MULTIMEDIA ===
+pipewire pipewire-alsa pipewire-pulse wireplumber
+easyeffects pavucontrol qpwgraph helvum
+mpv mpv-mpris audacious cmus ncmpcpp
+obs-studio obs-vaapi obs-vkcapture
+
+# === GAMING ===
+steam gamemode gamescope lutris
+proton-ge-custom-bin wine-staging winetricks
+lib32-vulkan-radeon lib32-gamemode vulkan-radeon
+
+# === PHOTOGRAPHY & DESIGN ===
+darktable rawtherapee gimp inkscape krita
+digikam shotwell nomacs
+
+# === DEVELOPMENT & UTILITIES ===
+git neovim code
+fish tmux mcfly zoxide
+brightnessctl playerctl
+grim slurp swappy wf-recorder cliphist
+rofi fuzzel
+
+# === THEMING ===
+inter-font ttf-fira-code ttf-fira-sans
+tokyonight-gtk-theme-git materia-gtk-theme papirus-icon-theme
+kvantum qt5ct qt6ct
+
+# === NETWORK & SYSTEM ===
+networkmanager networkmanager-openvpn
+blueman bluez bluez-utils
+docker docker-compose
+
+# === FONT PACKAGES ===
+noto-fonts noto-fonts-cjk noto-fonts-emoji
+ttf-jetbrains-mono-nerd ttf-meslo-nerd
+
+# === PYTHON DEPENDENCIES ===
+python python-pip python-gobject python-docutils
+
+# === OPTIONAL ENHANCEMENTS ===
+paru yay-bin
+auto-cpufreq thermald
+corectrl lact
+flatpak flatseal

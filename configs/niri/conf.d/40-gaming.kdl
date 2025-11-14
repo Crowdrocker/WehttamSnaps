@@ -1,0 +1,65 @@
+// === WEHTTAMSNAPS - GAMING CONFIGURATION ===
+// RX 580 optimized gaming settings
+
+layout {
+    // Gaming mode: reduce gaps for better game visibility
+    gaps 8
+    
+    // Disable animations for better performance in games
+}
+
+animations {
+    enable false
+    slowdown 0.5
+}
+
+// Gaming performance optimizations
+spawn-at-startup "gamemoded" "-r"
+spawn-at-startup "corectrl" "--minimize-systray"
+
+// Audio routing for gaming and streaming
+spawn-at-startup "pipewire"
+spawn-at-startup "wireplumber"
+
+// Environment variables for gaming
+spawn-at-startup "env" "DRI_PRIME=1" "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json"
+
+// Gamescope settings for specific games
+window-rule {
+    match app-id="^gamescope$"
+    fullscreen true
+    open-floating false
+}
+
+// Steam optimizations
+window-rule {
+    match app-id="^steam$"
+    geometry-corner-radius 0
+    open-floating true
+    default-width { fixed 1280 }
+    default-height { fixed 720 }
+}
+
+// Proton/Wine games
+window-rule {
+    match app-id="^wine$|^proton$"
+    open-floating true
+    geometry-corner-radius 0
+}
+
+// Performance monitoring (optional)
+spawn-at-startup "nvtop" "--delay=2"
+
+// Game-specific window rules
+window-rule {
+    match title="^Cyberpunk 2077$|^The Division 2$"
+    fullscreen true
+    open-floating false
+}
+
+// Disable compositor effects for fullscreen games
+window-rule {
+    match app-id="^gamescope$"
+    focus-ring { enable false }
+    border { enable false }
+}

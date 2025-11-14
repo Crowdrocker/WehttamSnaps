@@ -1,0 +1,111 @@
+// === WEHTTAMSNAPS - WINDOW RULES ===
+// Application-specific window rules
+
+// Terminal and development tools
+window-rule {
+    match app-id="^ghostty$"
+    open-floating false
+    default-column-width { proportion 0.5 }
+}
+
+window-rule {
+    match app-id="^code$|^neovide$"
+    open-floating false
+    default-column-width { proportion 0.66 }
+}
+
+// Photography and design applications
+window-rule {
+    match app-id="^darktable$|^rawtherapee$|^gimp$|^inkscape$|^krita$"
+    open-floating true
+    geometry-corner-radius 12
+    default-width { fixed 1280 }
+    default-height { fixed 720 }
+}
+
+window-rule {
+    match app-id="^digikam$|^shotwell$|^nomacs$"
+    open-floating true
+    default-width { fixed 1024 }
+    default-height { fixed 768 }
+}
+
+// Media and streaming
+window-rule {
+    match app-id="^mpv$"
+    open-floating true
+    geometry-corner-radius 8
+}
+
+window-rule {
+    match app-id="^obs$"
+    open-floating true
+    geometry-corner-radius 12
+    default-width { fixed 1280 }
+    default-height { fixed 720 }
+}
+
+// Gaming applications
+window-rule {
+    match app-id="^steam$"
+    open-floating true
+    default-width { fixed 1280 }
+    default-height { fixed 720 }
+}
+
+window-rule {
+    match app-id="^gamescope$"
+    open-floating false
+    fullscreen true
+}
+
+window-rule {
+    match app-id="^lutris$"
+    open-floating true
+    geometry-corner-radius 8
+}
+
+// System utilities
+window-rule {
+    match app-id="^pavucontrol$|^qpwgraph$|^helvum$"
+    open-floating true
+    geometry-corner-radius 12
+    default-width { fixed 800 }
+    default-height { fixed 600 }
+}
+
+window-rule {
+    match app-id="^system-config-printer$"
+    open-floating true
+}
+
+// Web applications
+window-rule {
+    match app-id="^brave-browser$|^firefox$|^chromium$"
+    open-floating false
+    default-column-width { proportion 0.66 }
+}
+
+// Dialog windows
+window-rule {
+    match title="^Open$|^Save$|^Select$|^Choose$"
+    open-floating true
+    geometry-corner-radius 8
+}
+
+// Noctalia/Quickshell windows
+window-rule {
+    match app-id="qs"
+    open-floating true
+}
+
+layer-rule {
+    match namespace="^quickshell-overview$"
+    place-within-backdrop true
+}
+
+layer-rule {
+    match namespace="^noctalia-shell$"
+    anchor-top true
+    exclusive-zone { top 48 }
+}

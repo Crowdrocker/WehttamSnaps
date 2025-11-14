@@ -1,0 +1,204 @@
+// === WEHTTAMSNAPS - KEYBINDINGS ===
+// Custom keybindings optimized for Noctalia and productivity
+
+// Define Super key
+let "mod" = "Super"
+let "shift" = "Shift"
+let "ctrl" = "Ctrl"
+let "alt" = "Alt"
+
+// === APPLICATION LAUNCHERS ===
+bind-key {
+    $mod "Return" {
+        spawn "ghostty"
+    }
+    
+    $mod "d" {
+        spawn "fuzzel"
+    }
+    
+    $mod "b" {
+        spawn "brave-browser"
+    }
+    
+    $mod "f" {
+        spawn "thunar"
+    }
+    
+    $mod "e" {
+        spawn "code"
+    }
+    
+    // Noctalia shell controls
+    $mod "space" {
+        spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "toggle"
+    }
+    
+    $mod "s" {
+        spawn "qs" "-c" "noctalia-shell" "ipc" "call" "controlCenter" "toggle"
+    }
+    
+    $mod "comma" {
+        spawn "qs" "-c" "noctalia-shell" "ipc" "call" "settings" "toggle"
+    }
+    
+    $mod "h" {
+        spawn "sh" "~/.config/wehttamsnaps/scripts/keyhints.sh"
+    }
+}
+
+// === WINDOW MANAGEMENT ===
+bind-key {
+    $mod "q" {
+        close-window
+    }
+    
+    $mod $shift "q" {
+        kill-window
+    }
+    
+    $mod "f" {
+        fullscreen-window
+    }
+    
+    $mod $shift "f" {
+        maximize-column
+    }
+    
+    $mod "space" {
+        toggle-float-window
+    }
+    
+    $mod $shift "space" {
+        toggle-window-floating
+    }
+}
+
+// === WORKSPACE MANAGEMENT ===
+bind-key {
+    $mod "1" { focus-workspace 1 }
+    $mod "2" { focus-workspace 2 }
+    $mod "3" { focus-workspace 3 }
+    $mod "4" { focus-workspace 4 }
+    $mod "5" { focus-workspace 5 }
+    $mod "6" { focus-workspace 6 }
+    $mod "7" { focus-workspace 7 }
+    $mod "8" { focus-workspace 8 }
+    $mod "9" { focus-workspace 9 }
+    
+    $mod $shift "1" { move-column-to-workspace 1 }
+    $mod $shift "2" { move-column-to-workspace 2 }
+    $mod $shift "3" { move-column-to-workspace 3 }
+    $mod $shift "4" { move-column-to-workspace 4 }
+    $mod $shift "5" { move-column-to-workspace 5 }
+    $mod $shift "6" { move-column-to-workspace 6 }
+    $mod $shift "7" { move-column-to-workspace 7 }
+    $mod $shift "8" { move-column-to-workspace 8 }
+    $mod $shift "9" { move-column-to-workspace 9 }
+}
+
+// === SCREENSHOTS AND RECORDING ===
+bind-key {
+    "Print" {
+        spawn "grim" "-o" "$(niri-monitor-info | jq -r '.[0].name')" "~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
+    }
+    
+    $mod "Print" {
+        spawn "grim" "-g" "$(slurp)" "~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
+    }
+    
+    $shift "Print" {
+        spawn "wf-recorder" "-f" "~/Videos/Screencasts/recording-$(date +%Y%m%d-%H%M%S).mp4"
+    }
+}
+
+// === AUDIO CONTROLS ===
+bind-key {
+    "XF86AudioRaiseVolume" {
+        spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "increase"
+    }
+    
+    "XF86AudioLowerVolume" {
+        spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "decrease"
+    }
+    
+    "XF86AudioMute" {
+        spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "muteOutput"
+    }
+    
+    "XF86AudioPlay" {
+        spawn "playerctl" "play-pause"
+    }
+    
+    "XF86AudioNext" {
+        spawn "playerctl" "next"
+    }
+    
+    "XF86AudioPrev" {
+        spawn "playerctl" "previous"
+    }
+}
+
+// === SYSTEM CONTROLS ===
+bind-key {
+    $ctrl $alt "l" {
+        spawn "hyprlock"
+    }
+    
+    $ctrl $alt "Delete" {
+        spawn "wlogout"
+    }
+    
+    $ctrl $alt "b" {
+        spawn "qs" "-c" "noctalia-shell" "ipc" "call" "bar" "toggle"
+    }
+}
+
+// === GAMING CONTROLS ===
+bind-key {
+    $mod $shift "g" {
+        spawn "sh" "~/.config/wehttamsnaps/scripts/toggle-gamemode.sh"
+    }
+    
+    $mod $shift "o" {
+        spawn "obs"
+    }
+    
+    $mod $shift "s" {
+        spawn "steam"
+    }
+}
+
+// === PHOTOGRAPHY WORKFLOW ===
+bind-key {
+    $mod $shift "d" {
+        spawn "darktable"
+    }
+    
+    $mod $shift "r" {
+        spawn "rawtherapee"
+    }
+    
+    $mod $shift "g" {
+        spawn "gimp"
+    }
+    
+    $mod $shift "i" {
+        spawn "inkscape"
+    }
+}
+
+// === WEBAPPS ===
+bind-key {
+    $mod $shift "y" {
+        spawn "sh" "~/.config/wehttamsnaps/webapps/youtube.sh"
+    }
+    
+    $mod $shift "t" {
+        spawn "sh" "~/.config/wehttamsnaps/webapps/twitch.sh"
+    }
+    
+    $mod $shift "m" {
+        spawn "sh" "~/.config/wehttamsnaps/webapps/music.sh"
+    }
+}

@@ -1,0 +1,296 @@
+// === WEHTTAMSNAPS - MODDING KEYBINDINGS ===
+// Comprehensive keybinds for SteamTinkerLaunch, Vortex, MO2, Wabbajack
+
+// Define mod key combinations
+let "mod" = "Super"
+let "shift" = "Shift"
+let "ctrl" = "Ctrl"
+let "alt" = "Alt"
+
+// === MODDING LAUNCHERS ===
+bind-key {
+    // SteamTinkerLaunch
+    $mod $shift "t" {
+        spawn "steamtinkerlaunch"
+    }
+    
+    // Vortex Mod Manager
+    $mod $shift "v" {
+        spawn "vortex"
+    }
+    
+    // Mod Organizer 2
+    $mod $shift "m" {
+        spawn "modorganizer2"
+    }
+    
+    // Wabbajack
+    $mod $shift "w" {
+        spawn "wabbajack"
+    }
+    
+    // LOOT (Load Order Optimization Tool)
+    $mod $shift "l" {
+        spawn "loot"
+    }
+    
+    // xEdit (TESVEdit/FO4Edit/etc.)
+    $mod $shift "x" {
+        spawn "~/.local/share/modding/tools/launch-xedit.sh"
+    }
+    
+    // Creation Kit
+    $mod $shift "c" {
+        spawn "creationkit"
+    }
+    
+    // FNIS/Nemesis
+    $mod $shift "f" {
+        spawn "~/.local/share/modding/tools/launch-animation-tools.sh"
+    }
+}
+
+// === MODDING WORKSPACE MANAGEMENT ===
+bind-key {
+    // Switch to modding workspace
+    $mod $ctrl "3" {
+        focus-workspace 3
+    }
+    
+    $mod $ctrl "4" {
+        focus-workspace 4
+    }
+    
+    $mod $ctrl "5" {
+        focus-workspace 5
+    }
+    
+    // Move current window to modding workspace
+    $mod $ctrl $shift "3" {
+        move-column-to-workspace 3
+    }
+    
+    $mod $ctrl $shift "4" {
+        move-column-to-workspace 4
+    }
+    
+    $mod $ctrl $shift "5" {
+        move-column-to-workspace 5
+    }
+    
+    // Modding workspace layout preset
+    $mod $alt "m" {
+        spawn "~/.config/wehttamsnaps/scripts/setup-modding-workspace.sh"
+    }
+}
+
+// === MODDING FILE MANAGEMENT ===
+bind-key {
+    // Open modding directories
+    $mod $ctrl "d" {
+        spawn "thunar" "~/.local/share/modding/"
+    }
+    
+    $mod $ctrl "s" {
+        spawn "thunar" "~/.local/share/modding/downloads/"
+    }
+    
+    $mod $ctrl "r" {
+        spawn "thunar" "~/.local/share/modding/tools/"
+    }
+    
+    // Open game directories
+    $mod $ctrl "g" {
+        spawn "~/.config/wehttamsnaps/scripts/open-game-directories.sh"
+    }
+    
+    // Archive management
+    $mod $ctrl "a" {
+        spawn "~/.config/wehttamsnaps/scripts/extract-mod-archive.sh"
+    }
+}
+
+// === MODDING WEB TOOLS ===
+bind-key {
+    // Nexus Mods webapp
+    $mod $alt "n" {
+        spawn "sh" "~/.config/wehttamsnaps/webapps/nexusmods.sh"
+    }
+    
+    // LOOT webapp
+    $mod $alt "l" {
+        spawn "sh" "~/.config/wehttamsnaps/webapps/loot.sh"
+    }
+    
+    // Modding Discord webapp
+    $mod $alt "d" {
+        spawn "sh" "~/.config/wehttamsnaps/webapps/modding-discord.sh"
+    }
+    
+    // Modding wiki/webapp
+    $mod $alt "w" {
+        spawn "sh" "~/.config/wehttamsnaps/webapps/modding-wiki.sh"
+    }
+}
+
+// === STEAMTINKERLAUNCH CONTROLS ===
+bind-key {
+    // STL Quick Actions
+    $mod $alt "t" {
+        spawn "~/.config/wehttamsnaps/scripts/stl-quick-actions.sh"
+    }
+    
+    // STL Configuration
+    $mod $alt $shift "t" {
+        spawn "~/.config/wehttamsnaps/scripts/stl-config.sh"
+    }
+    
+    // STL Game Settings
+    $mod $ctrl "t" {
+        spawn "~/.config/wehttamsnaps/scripts/stl-game-settings.sh"
+    }
+}
+
+// === MOD ORGANIZER 2 CONTROLS ===
+bind-key {
+    // MO2 Quick Launch
+    $mod $alt "o" {
+        spawn "~/.config/wehttamsnaps/scripts/mo2-quick-launch.sh"
+    }
+    
+    // MO2 Mod Installer
+    $mod $alt $shift "o" {
+        spawn "~/.config/wehttamsnaps/scripts/mo2-mod-installer.sh"
+    }
+    
+    // MO2 Profile Manager
+    $mod $ctrl "o" {
+        spawn "~/.config/wehttamsnaps/scripts/mo2-profile-manager.sh"
+    }
+}
+
+// === VORTEX CONTROLS ===
+bind-key {
+    // Vortex Quick Actions
+    $mod $alt "v" {
+        spawn "~/.config/wehttamsnaps/scripts/vortex-quick-actions.sh"
+    }
+    
+    // Vortex Deployment
+    $mod $alt $shift "v" {
+        spawn "~/.config/wehttamsnaps/scripts/vortex-deploy.sh"
+    }
+    
+    // Vortex Game Management
+    $mod $ctrl "v" {
+        spawn "~/.config/wehttamsnaps/scripts/vortex-games.sh"
+    }
+}
+
+// === WABBAJACK CONTROLS ===
+bind-key {
+    // Wabbajack Quick Launch
+    $mod $alt "w" {
+        spawn "~/.config/wehttamsnaps/scripts/wabbajack-quick-launch.sh"
+    }
+    
+    // Wabbajack List Download
+    $mod $alt $shift "w" {
+        spawn "~/.config/wehttamsnaps/scripts/wabbajack-download-lists.sh"
+    }
+    
+    // Wabbajack Installer
+    $mod $ctrl "w" {
+        spawn "~/.config/wehttamsnaps/scripts/wabbajack-installer.sh"
+    }
+}
+
+// === MODDING TERMINAL CONTROLS ===
+bind-key {
+    // Open modding terminal
+    $mod $ctrl $shift "enter" {
+        spawn "ghostty" "--title=modding" "--working-directory=~/.local/share/modding/"
+    }
+    
+    // Open STL terminal
+    $mod $alt $shift "enter" {
+        spawn "ghostty" "--title=stl" "--working-directory=~/.local/share/SteamTinkerLaunch/"
+    }
+    
+    // Open Vortex terminal
+    $mod $shift "enter" {
+        spawn "ghostty" "--title=vortex" "--working-directory=~/.config/vortex/"
+    }
+}
+
+// === MODDING UTILITIES ===
+bind-key {
+    // Backup modding setup
+    $mod $ctrl $shift "b" {
+        spawn "~/.config/wehttamsnaps/scripts/backup-modding-setup.sh"
+    }
+    
+    // Restore modding setup
+    $mod $ctrl $shift "r" {
+        spawn "~/.config/wehttamsnaps/scripts/restore-modding-setup.sh"
+    }
+    
+    // Clean modding cache
+    $mod $ctrl $shift "c" {
+        spawn "~/.config/wehttamsnaps/scripts/clean-modding-cache.sh"
+    }
+    
+    // Update modding tools
+    $mod $ctrl $shift "u" {
+        spawn "~/.config/wehttamsnaps/scripts/update-modding-tools.sh"
+    }
+}
+
+// === MODDING MONITORING ===
+bind-key {
+    // Monitor modding processes
+    $mod $ctrl $shift "p" {
+        spawn "ghostty" "-e" "htop" "--filter=steam|vortex|modorganizer|wabbajack"
+    }
+    
+    // Monitor disk usage for mods
+    $mod $ctrl $shift "d" {
+        spawn "ghostty" "-e" "du" "-sh" "~/.local/share/modding/"
+    }
+    
+    // Monitor downloads
+    $mod $ctrl $shift "n" {
+        spawn "ghostty" "-e" "watch" "ls -la ~/.local/share/modding/downloads/"
+    }
+}
+
+// === GAME LAUNCH WITH MODS ===
+bind-key {
+    // Launch current game with mods
+    $mod $ctrl $shift "g" {
+        spawn "~/.config/wehttamsnaps/scripts/launch-game-with-mods.sh"
+    }
+    
+    // Launch game without mods
+    $mod $alt $shift "g" {
+        spawn "~/.config/wehttamsnaps/scripts/launch-game-vanilla.sh"
+    }
+    
+    // Switch mod profiles
+    $mod $ctrl $shift "s" {
+        spawn "~/.config/wehttamsnaps/scripts/switch-mod-profile.sh"
+    }
+}
+
+// === MODDING HELP ===
+bind-key {
+    // Modding keybinds help
+    $mod $shift $alt "h" {
+        spawn "sh" "~/.config/wehttamsnaps/scripts/modding-keyhints.sh"
+    }
+    
+    // Modding documentation
+    $mod $shift $alt "d" {
+        spawn "sh" "~/.config/wehttamsnaps/scripts/open-modding-docs.sh"
+    }
+}

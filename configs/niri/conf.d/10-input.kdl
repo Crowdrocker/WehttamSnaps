@@ -1,0 +1,26 @@
+// === WEHTTAMSNAPS - INPUT CONFIGURATION ===
+// Keyboard, mouse, and touchpad settings
+
+// Additional input devices
+input {
+    // Trackball settings if present
+    device "Logitech MX Ergo" {
+        natural-scroll false
+        accel-speed 0.3
+    }
+    
+    // Gaming mouse settings
+    device "Logitech G502" {
+        natural-scroll false
+        accel-speed 0.0
+        accel-profile "flat"
+    }
+    
+    // Wacom tablet for photography
+    device "Wacom Intuos Pro S" {
+        map-to-output "HDMI-A-1"
+    }
+}
+
+// Libinput settings for better tablet support
+spawn-at-startup "libinput" "debug-events"

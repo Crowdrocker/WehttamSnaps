@@ -1,0 +1,39 @@
+// === WEHTTAMSNAPS NIRI CONFIGURATION ===
+// GitHub: https://github.com/Crowdrocker
+// RX 580 Optimized | Photography | Gaming | Content Creation
+
+// Include modular configuration files
+include "conf.d/00-base.kdl"
+include "conf.d/10-input.kdl"
+include "conf.d/20-layout.kdl"
+include "conf.d/30-rules.kdl"
+include "conf.d/35-modding.kdl"
+include "conf.d/40-gaming.kdl"
+include "conf.d/50-keybinds.kdl"
+include "conf.d/51-modding-keybinds.kdl"
+include "conf.d/60-autostart.kdl"
+include "conf.d/99-overrides.kdl"
+
+// Debug options for Noctalia integration
+debug {
+    // Honor XDG activation with invalid serial for notification actions
+    honor-xdg-activation-with-invalid-serial
+}
+
+// Window rules for rounded corners and modern look
+window-rule {
+    geometry-corner-radius 20
+    clip-to-geometry true
+}
+
+// Layer rules for Quickshell/Noctalia integration
+layer-rule {
+    match namespace="^quickshell-overview$"
+    place-within-backdrop true
+}
+
+// File picker should float
+window-rule {
+    match app-id="qs"
+    open-floating true
+}

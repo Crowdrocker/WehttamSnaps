@@ -1,202 +1,179 @@
 # === WEHTTAMSNAPS GHOSTTY CONFIGURATION ===
 # GitHub: https://github.com/Crowdrocker
-# Modern terminal with Fira Code font and system theming
+# Optimized for photography, gaming, and development
 
 # Font configuration
 font-family = Fira Code
 font-size = 14
 font-weight = 500
-font-style = normal
-font-variation = "wght" 500
+font-feature = "liga" "ss01" "ss02" "ss03" "ss04" "ss05"
 
-# Fallback fonts
-font-family = Fira Code, "Noto Sans Mono", "Symbols Nerd Font Mono", monospace
-
-# Terminal dimensions
-columns = 120
-rows = 30
+# Theme integration (matches system theme)
+theme = auto
 
 # Window configuration
-window-width = 1200
-window-height = 700
-window-x = 100
-window-y = 100
+window-width = 120
+window-height = 40
+window-padding-x = 8
+window-padding-y = 8
 window-decoration = false
-window-inherit-working-directory = true
-window-save-state = true
+window-inherit-font-size = true
 window-theme = auto
 
-# Colors (system theme integration)
-theme = light
-# Use dark theme by default
-theme = dark
-
-# Custom WehttamSnaps color scheme
-background = 0x1a1b26
-foreground = 0xc0caf5
-cursor = 0xc0caf5
-
-# Black
-color-0 = 0x15161e
-color-8 = 0x414868
-
-# Red
-color-1 = 0xf7768e
-color-9 = 0xff7a93
-
-# Green
-color-2 = 0x9ece6a
-color-10 = 0xb9f27c
-
-# Yellow
-color-3 = 0xe0af68
-color-11 = 0xff9e64
-
-# Blue
-color-4 = 0x7aa2f7
-color-12 = 0x7dcfff
-
-# Magenta
-color-5 = 0xbb9af7
-color-13 = 0xbb9af7
-
-# Cyan
-color-6 = 0x7dcfff
-color-14 = 0x7dcfff
-
-# White
-color-7 = 0xa9b1d6
-color-15 = 0xc0caf5
-
-# Cursor settings
+# Cursor configuration
 cursor-style = block
-cursor-style-blink = true
-cursor-invert-fg-bg = true
-cursor-text = background
-cursor-color = foreground
+cursor-blink = false
+cursor-color = #585bbe
+cursor-text = #ffffff
 
-# Selection
-selection-background = 0x565f89
-selection-foreground = foreground
+# Color scheme (matches WehttamSnaps branding)
+background = 111111
+foreground = #cdd6f4
+selection-background = #585bbe
+selection-foreground = #ffffff
 
-# Bell
-audible-bell = false
-visual-bell = false
+# ANSI colors (dark theme)
+color0 = #11111b
+color1 = #f38ba8
+color2 = #a6e3a1
+color3 = #f9e2af
+color4 = #89b4fa
+color5 = #f5c2e7
+color6 = #94e2d5
+color7 = #cdd6f4
 
-# Scrolling
-scrollback-limit = 10000
-scroll-on-output = false
-scroll-on-input = true
-scroll-on-keypress = true
-mouse-scroll-accelleration = 1.0
+# Bright ANSI colors
+color8 = #45475a
+color9 = #f38ba8
+color10 = #a6e3a1
+color11 = #f9e2af
+color12 = #89b4fa
+color13 = #f5c2e7
+color14 = #94e2d5
+color15 = #ffffff
 
-# Copy/Paste
-copy-on-select = false
-clipboard-read = true
-clipboard-write = true
-clipboard-paste-protection = true
-clipboard-paste-bracketed = true
+# Shell integration
+shell-integration = fish
+shell-integration-features = cursor,sudo,title
+shell-integration-escape-sequences = true
 
-# Shell
-shell = /bin/zsh
-shell-login = false
-shell-arg = --login
+# Key bindings
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+keybind = ctrl+shift+u=paste_from_selection
+keybind = ctrl+shift+t=new_tab
+keybind = ctrl+shift+w=close_tab
+keybind = ctrl+pageup=previous_tab
+keybind = ctrl+pagedown=next_tab
+keybind = ctrl+shift+pageup=move_tab_left
+keybind = ctrl+shift+pagedown=move_tab_right
+keybind = ctrl+1=goto_tab_1
+keybind = ctrl+2=goto_tab_2
+keybind = ctrl+3=goto_tab_3
+keybind = ctrl+4=goto_tab_4
+keybind = ctrl+5=goto_tab_5
+keybind = ctrl+6=goto_tab_6
+keybind = ctrl+7=goto_tab_7
+keybind = ctrl+8=goto_tab_8
+keybind = ctrl+9=goto_tab_9
+keybind = ctrl+0=goto_tab_10
+
+# Bell configuration
+bell = false
+bell-border = false
+
+# Mouse configuration
+mouse-hide-while-typing = true
+mouse-shift-capture = false
+
+# Performance settings
+gpu-acceleration = true
+resize-delay = 0
+fps = 144
+resize-strategy = none
 
 # Working directory
 working-directory = inherit
 
-# Environment
-term = xterm-256color
-term-variants = xterm-256color,xterm,screen
+# Environment variables
+env = TERM=xterm-256color
+env = COLORTERM=truecolor
 
-# Key bindings
-key = ctrl+shift+c=copy_to_clipboard
-key = ctrl+shift+v=paste_from_clipboard
-key = ctrl+shift+t=new_window
-key = ctrl+shift+w=close_window
-key = ctrl+shift+q=close_tab
-key = ctrl+shift+n=new_tab
-key = ctrl+pageup=previous_tab
-key = ctrl+pagedown=next_tab
-key = ctrl+tab=next_tab
-key = ctrl+shift+tab=previous_tab
-key = f11=toggle_fullscreen
-
-# Font sizing
-key = ctrl+plus=increase_font_size
-key = ctrl+minus=decrease_font_size
-key = ctrl+0=reset_font_size
-
-# Search
-key = ctrl+f=find
-key = ctrl+g=find_next
-key = ctrl+shift+g=find_previous
-
-# Transparency
-background-opacity = 0.95
-window-opacity = 1.0
-
-# Blur (if supported)
-background-blur-radius = 0
-
-# Padding
-padding-x = 8
-padding-y = 8
-
-# Window dividers
-window-divider-width = 2
-window-divider-color = 0x565f89
-
-# Confirm before closing
+# Development features
 confirm-close-surface = false
+copy-on-select = false
+auto-copy = false
 
-# Mouse
-mouse-hide-while-typing = true
-mouse-alt-cursor = false
+# Tab configuration
+tab-position = bottom
+tab-width = 1
+tab-title-template = "{title}"
 
-# Focus
-auto-click-window-focus = false
-click-through = false
+# Search configuration
+search-mode = fuzzy
 
-# Resize
-resize-mode = minimal
+# Font ligatures and rendering
+font-variant = normal
+font-stretch = normal
+font-style = normal
 
-# Performance
-gpu-acceleration = true
-max-fps = 144
-resize-delay = 10
+# Line height and spacing
+line-height = 1.2
+letter-spacing = 0
 
-# Security
-allow-clipboard-write = true
-allow-clipboard-read = true
+# Transparency and blur
+background-opacity = 0.95
+blur-radius = 0
 
-# Integration
-# Enable shell integration for better experience
-shell-integration = enabled
+# Command palette
+command-palette-launcher = super+p
 
-# Tab bar
-tab-bar-mode = auto
-tab-bar-edge = bottom
-tab-bar-style = powerline
+# Quick actions
+quick-action = ctrl+shift+enter=new_window
 
-# URL detection
-url-launcher = xdg-open
-url-launchers = https:http:ftp:file:mailto:git:gopher:irc
+# Clipboard configuration
+clipboard-read = allow
+clipboard-write = allow
+clipboard-paste-protection = true
 
-# Custom key bindings for WehttamSnaps workflow
-key = super+enter=new_window
-key = super+shift+enter=new_tab
-key = super+t=new_tab
-key = super+shift+t=toggle_transparency
-key = super+f=toggle_fullscreen
+# Screen reader support
+screen-reader = false
 
-# Performance optimizations
-buffer-width = 8192
-fps-limit = 144
+# URL handling
+url-launchers = xdg-open,firefox,brave-browser
+url-launcher-modifier = super
 
-# Debug
-debug = false
+# Terminal features
+allow-remote-screencast = false
+image-storage = memory
+image-storage-limit = 320000000
+image-animation-limit = 3
 
-# WehttamSnaps branding
-# Professional terminal configuration optimized for development and gaming
-# GitHub: https://github.com/Crowdrocker
+# Window state
+remember-window-size = true
+remember-window-position = true
+
+# Performance tuning
+resize-delay-frames = 0
+max-width = 0
+max-height = 0
+min-width = 0
+min-height = 0
+
+# Custom commands (WehttamSnaps specific)
+keybind = super+shift+d=spawn darktable
+keybind = super+shift+r=spawn rawtherapee
+keybind = super+shift+g=spawn gimp
+keybind = super+shift+o=spawn obs
+
+# Development shortcuts
+keybind = super+shift+e=spawn code
+keybind = super+shift+n=spawn neovide
+
+# System shortcuts
+keybind = super+shift+f=spawn thunar
+keybind = super+shift+h=spawn $HOME/.config/wehttamsnaps/scripts/keyhints.sh
+
+# Gaming shortcuts
+keybind = super+shift+s=spawn steam
+keybind = super+shift+l=spawn lutris

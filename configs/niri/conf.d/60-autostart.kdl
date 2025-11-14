@@ -1,0 +1,50 @@
+// === WEHTTAMSNAPS - AUTOSTART CONFIGURATION ===
+// Applications and services that start with Niri
+
+// === NOCTALIA SHELL ===
+spawn-at-startup "qs" "-c" "noctalia-shell"
+
+// === SYSTEM SERVICES ===
+spawn-at-startup "blueberry"  // Bluetooth manager
+spawn-at-startup "nm-applet"  // Network manager
+spawn-at-startup "easyeffects"  // Audio effects
+spawn-at-startup "corectrl" "--minimize-systray"  // AMD GPU control
+
+// === GAMING OPTIMIZATIONS ===
+spawn-at-startup "gamemoded" "-r"  // Game mode daemon
+spawn-at-startup "lutris"  // Game launcher (optional)
+
+// === PRODUCTIVITY TOOLS ===
+spawn-at-startup "cliphist" "store"  // Clipboard history
+spawn-at-startup "darkman" "run"  // Dark mode daemon
+spawn-at-startup "autotiling"  // Auto tiling for windows
+
+// === BACKGROUND SERVICES ===
+spawn-at-startup "swww-daemon"  // Wallpaper daemon
+spawn-at-startup "waypaper" "--restore"  // Restore last wallpaper
+spawn-at-startup "hyprpaper"  // Alternative wallpaper tool
+
+// === AUDIO SETUP ===
+spawn-at-startup "pipewire"  // Audio server
+spawn-at-startup "wireplumber"  // PipeWire session manager
+spawn-at-startup "helvum"  // Audio patchbay (minimized)
+
+// === SCREEN RECORDING TOOLS ===
+spawn-at-startup "wl-paste" "--type" "--watch" "cliphist" "store"  // Clipboard monitoring
+
+// === WELCOME APP (first run) ===
+spawn-at-startup "python3" "~/.config/wehttamsnaps/scripts/welcome.py"
+
+// === MONITOR CONFIGURATION ===
+spawn-at-startup "xrandr" "--auto"  // Auto-configure monitors
+
+// === POWER MANAGEMENT ===
+spawn-at-startup "power-profiles-daemon"  // Power profile management
+spawn-at-startup "auto-cpufreq" "--daemon"  // CPU frequency control
+
+// === ENVIRONMENT VARIABLES ===
+spawn-at-startup "env" "DRI_PRIME=1" "echo" "GPU optimized"
+spawn-at-startup "env" "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json" "echo" "Vulkan configured"
+
+// === TEMPORARY DEBUG ===
+// spawn-at-startup "alacritty" "-e" "htop"  // Uncomment for debugging

@@ -1,156 +1,285 @@
 #!/bin/bash
-# === WEHTTAMSNAPS AUDIO ROUTING SETUP ===
-# GitHub: https://github.com/Crowdrocker
-# Configures PipeWire audio routing for streaming and gaming
+# === WEHTTAMSNAPS AUDIO SETUP ===
+# Configure PipeWire virtual sinks for streaming and recording
 
-echo "Setting up WehttamSnaps audio routing..."
+set -euo pipefail
 
-# Create virtual sinks for different applications
-echo "Creating virtual audio sinks..."
+# Colors
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
 
-# Game audio sink
-pactl load-module module-null-sink sink_name=GameAudio sink_properties=device.description="GameAudio" rate=48000
+echo -e "${BLUE}[INFO] Setting up WehttamSnaps audio routing...${NC}"
 
-# Voice chat sink
-pactl load-module module-null-sink sink_name=VoiceChat sink_properties=device.description="VoiceChat" rate=48000
+# Create virtual sinks for streaming
+create_virtual_sinks() {
+    echo -e "${YELLOW}[SETUP] Creating virtual sinks...${NC}"
+    
+    # Game audio sink
+    pactl load-module module-null-sink sink_name=Game sink_properties=device.description="Game_Audio"
+    
+    # Microphone sink
+    pactl load-module module-null-sink sink_name=Mic sink_properties=device.description="Microphone_Virtual"
+    
+    # Media sink (music/browser)
+    pactl load-module module-null-sink sink_name=Media sink_properties=device.description="Media_Audio"
+    
+    # Chat sink (Discord/VOIP)
+    pactl load-module module-null-sink sink_name=Chat sink_properties=device.description="Chat_Audio"
+    
+    # Mix sink for recording
+    pactl load-module module-null-sink sink_name=Mix sink_properties=device.description="Recording_Mix"
+    
+    echo -e "${GREEN}[OK] Virtual sinks created${NC}"
+}
 
-# System audio sink
-pactl load-module module-null-sink sink_name=SystemAudio sink_properties=device.description="SystemAudio" rate=48000
+# Set up loopback connections
+setup_loopbacks() {
+    echo -e "${YELLOW}[SETUP] Configuring loopback connections...${NC}"
+    
+    # Connect virtual sinks to recording mix
+    pactl load-module module-loopback source=Game.monitor sink=Mix
+    pactl load-module module-loopback source=Mic.monitor sink=Mix
+    pactl load-module module-loopback source=Media.monitor sink=Mix
+    pactl load-module module-loopback source=Chat.monitor sink=Mix
+    
+    echo -e "${GREEN}[OK] Loopback connections configured${NC}"
+}
 
-# Stream output sink (combines all audio)
-pactl load-module module-null-sink sink_name=StreamOutput sink_properties=device.description="StreamOutput" rate=48000
+# Set default devices
+set_defaults() {
+    echo -e "${YELLOW}[SETUP] Setting default devices...${NC}"
+    
+    # Set system output
+    pactl set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo
+    
+    # Set system input
+    pactl set-default-source alsa_input.pci-0000_00_1b.0.analog-stereo
+    
+    echo -e "${GREEN}[OK] Default devices set${NC}"
+}
 
-# Create loopbacks to route audio
-echo "Setting up audio routing loops..."
+# Create application routing rules
+create_routing_rules() {
+    echo -e "${YELLOW}[SETUP] Creating routing rules...${NC}"
+    
+    # Create directory for custom rules
+    mkdir -p ~/.config/wehttamsnaps/audio
+    
+    # Write routing configuration
+    cat > ~/.config/wehttamsnaps/audio/routing.conf << 'EOF'
+# WehttamSnaps Audio Routing Configuration
+# Rules for automatic application routing
 
-# Route game audio to both speakers and stream output
-pactl load-module module-loopback source=GameAudio.monitor sink=auto_null
-pactl load-module module-loopback source=GameAudio.monitor sink=StreamOutput
+[Game Applications]
+steam.exe
+gamescope.exe
+lutris.exe
+proton.exe
+wine.exe
+Target Sink: Game
 
-# Route voice chat to both headset and stream output
-pactl load-module module-loopback source=VoiceChat.monitor sink=auto_null
-pactl load-module module-loopback source=VoiceChat.monitor sink=StreamOutput
+[Media Applications]
+brave-browser
+firefox
+chromium
+mpv
+vlc
+Target Sink: Media
 
-# Route system audio to both speakers and stream output
-pactl load-module module-loopback source=SystemAudio.monitor sink=auto_null
-pactl load-module module-loopback source=SystemAudio.monitor sink=StreamOutput
+[Chat Applications]
+Discord
+Teamspeak
+Mumble
+Target Sink: Chat
 
-# Create qpwgraph layout file
-mkdir -p ~/.config/qpwgraph
+[Recording Applications]
+obs
+audacity
+ Ardour
+Target Source: Mix.monitor
+EOF
+    
+    echo -e "${GREEN}[OK] Routing rules created${NC}"
+}
 
-cat > ~/.config/qpwgraph/wehttamsnaps.xml << 'EOF'
+# Create Qpwgraph preset
+create_qpwgraph_preset() {
+    echo -e "${YELLOW}[SETUP] Creating Qpwgraph preset...${NC}"
+    
+    mkdir -p ~/.config/qpwgraph
+    
+    cat > ~/.config/qpwgraph/WehttamSnaps.xml << 'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
-<graph>
-  <group mode="1" name="GameAudio" x="100" y="100"/>
-  <group mode="1" name="VoiceChat" x="300" y="100"/>
-  <group mode="1" name="SystemAudio" x="500" y="100"/>
-  <group mode="1" name="StreamOutput" x="300" y="300"/>
-  <group mode="0" name="Microphone" x="100" y="400"/>
-  <group mode="0" name="Speakers" x="500" y="400"/>
-</graph>
+<preset name="WehttamSnaps Streaming" version="0.3.8">
+  <metadata>
+    <creator>WehttamSnaps</creator>
+    <comments>Streaming setup with virtual sinks</comments>
+  </metadata>
+  <graph>
+    <node id="1" name="Game" type="sink"/>
+    <node id="2" name="Media" type="sink"/>
+    <node id="3" name="Chat" type="sink"/>
+    <node id="4" name="Mix" type="sink"/>
+    <node id="5" name="System Output" type="sink"/>
+    <connection source="Game.monitor" target="Mix"/>
+    <connection source="Media.monitor" target="Mix"/>
+    <connection source="Chat.monitor" target="Mix"/>
+    <connection source="Mix.monitor" target="System Output"/>
+  </graph>
+</preset>
 EOF
+    
+    echo -e "${GREEN}[OK] Qpwgraph preset created${NC}"
+}
 
-# Set up low latency configuration
-echo "Configuring low latency audio..."
-
-# Set PipeWire buffer size for low latency
-pw-metadata -n settings 0 clock.force-rate 48000
-pw-metadata -n settings 0 clock.quantum-limit 8192
-pw-metadata -n settings 0 default.clock.rate 48000
-pw-metadata -n settings 0 default.clock.quantum 256
-pw-metadata -n settings 0 default.clock.min-quantum 32
-pw-metadata -n settings 0 default.clock.max-quantum 8192
-
-# Create application routing script
-cat > ~/.config/wehttamsnaps/scripts/route-app-audio.sh << 'EOF'
-#!/bin/bash
-# Route application audio to specific sink
-
-if [[ $# -lt 2 ]]; then
-    echo "Usage: $0 &quot;app_name&quot; &quot;sink_name&quot;"
-    echo "Available sinks: GameAudio, VoiceChat, SystemAudio, StreamOutput"
-    exit 1
-fi
-
-APP_NAME="$1"
-SINK_NAME="$2"
-
-# Find application's sink input
-SINK_INPUT=$(pactl list sink-inputs short | grep "$APP_NAME" | awk '{print $1}')
-
-if [[ -n "$SINK_INPUT" ]]; then
-    pactl move-sink-input "$SINK_INPUT" "$SINK_NAME"
-    echo "Routed $APP_NAME to $SINK_NAME"
-else
-    echo "Could not find $APP_NAME sink input"
-    echo "Try starting the application first"
-fi
+# Create EasyEffects presets
+create_easyeffects_presets() {
+    echo -e "${YELLOW}[SETUP] Creating EasyEffects presets...${NC}"
+    
+    preset_dir="$HOME/.config/easyeffects/output"
+    mkdir -p "$preset_dir"
+    
+    # Gaming preset (low latency)
+    cat > "$preset_dir/Gaming.json" << 'EOF'
+{
+  "output": {
+    "blocksize": 128,
+    "buffer": 64,
+    "bypass": false,
+    "plugins_order": [
+      "limiter"
+    ],
+    "limiter": {
+      "bypass": false,
+      "input-gain": 0,
+      "limit": 0,
+      "lookahead": 5,
+      "mode": "Herm widest",
+      "output-gain": 0,
+      "release": 50,
+      "sidechain": {
+        "input": "Left/Right",
+        "mode": "RMS",
+        "preamp": 0,
+        "reactivity": 10,
+        "source": "Input"
+      }
+    }
+  }
+}
 EOF
-
-chmod +x ~/.config/wehttamsnaps/scripts/route-app-audio.sh
-
-# Create quick routing presets
-cat > ~/.config/wehttamsnaps/scripts/audio-presets.sh << 'EOF'
-#!/bin/bash
-# Quick audio routing presets
-
-case "$1" in
-    "gaming")
-        echo "Setting up gaming audio preset..."
-        ~/.config/wehttamsnaps/scripts/route-app-audio.sh "Steam" "GameAudio"
-        ~/.config/wehttamsnaps/scripts/route-app-audio.sh "Lutris" "GameAudio"
-        echo "Gaming preset activated"
-        ;;
-    "streaming")
-        echo "Setting up streaming audio preset..."
-        # All audio should already be routed to StreamOutput
-        echo "Streaming preset activated - all audio routed to StreamOutput"
-        ;;
-    "voicechat")
-        echo "Setting up voice chat preset..."
-        ~/.config/wehttamsnaps/scripts/route-app-audio.sh "Discord" "VoiceChat"
-        ~/.config/wehttamsnaps/scripts/route-app-audio.sh "TelegramDesktop" "VoiceChat"
-        echo "Voice chat preset activated"
-        ;;
-    "reset")
-        echo "Resetting audio routing..."
-        pactl unload-module module-loopback
-        pactl unload-module module-null-sink
-        echo "Audio routing reset"
-        ;;
-    *)
-        echo "Usage: $0 {gaming|streaming|voicechat|reset}"
-        echo "Available presets:"
-        echo "  gaming     - Route games to GameAudio sink"
-        echo "  streaming  - All audio routed to StreamOutput sink"
-        echo "  voicechat  - Route chat apps to VoiceChat sink"
-        echo "  reset      - Reset all routing"
-        ;;
-esac
+    
+    # Music preset
+    cat > "$preset_dir/Music.json" << 'EOF'
+{
+  "output": {
+    "blocksize": 512,
+    "buffer": 128,
+    "bypass": false,
+    "plugins_order": [
+      "equalizer",
+      "limiter"
+    ],
+    "equalizer": {
+      "bypass": false,
+      "input-gain": 0,
+      "output-gain": 0,
+      "mode": "IIR",
+      "num-bands": 10,
+      "split-channels": false,
+      "bands": [
+        {"freq": 32, "gain": 0, "q": 1, "type": "peaking"},
+        {"freq": 64, "gain": 0, "q": 1, "type": "peaking"},
+        {"freq": 125, "gain": 0, "q": 1, "type": "peaking"},
+        {"freq": 250, "gain": 0, "q": 1, "type": "peaking"},
+        {"freq": 500, "gain": 0, "q": 1, "type": "peaking"},
+        {"freq": 1000, "gain": 0, "q": 1, "type": "peaking"},
+        {"freq": 2000, "gain": 0, "q": 1, "type": "peaking"},
+        {"freq": 4000, "gain": 0, "q": 1, "type": "peaking"},
+        {"freq": 8000, "gain": 0, "q": 1, "type": "peaking"},
+        {"freq": 16000, "gain": 0, "q": 1, "type": "peaking"}
+      ]
+    },
+    "limiter": {
+      "bypass": false,
+      "input-gain": 0,
+      "limit": -1,
+      "lookahead": 5,
+      "mode": "Herm widest",
+      "output-gain": 0,
+      "release": 200,
+      "sidechain": {
+        "input": "Left/Right",
+        "mode": "RMS",
+        "preamp": 0,
+        "reactivity": 10,
+        "source": "Input"
+      }
+    }
+  }
+}
 EOF
+    
+    echo -e "${GREEN}[OK] EasyEffects presets created${NC}"
+}
 
-chmod +x ~/.config/wehttamsnaps/scripts/audio-presets.sh
+# Test audio setup
+test_audio() {
+    echo -e "${YELLOW}[TEST] Testing audio configuration...${NC}"
+    
+    # Test speaker output
+    if speaker-test -t wav -c 2 -l 1; then
+        echo -e "${GREEN}[OK] Speaker test passed${NC}"
+    else
+        echo -e "${YELLOW}[WARN] Speaker test failed${NC}"
+    fi
+    
+    # List available sinks
+    echo -e "${BLUE}[INFO] Available audio sinks:${NC}"
+    pactl list sinks short
+    
+    # List available sources
+    echo -e "${BLUE}[INFO] Available audio sources:${NC}"
+    pactl list sources short
+}
 
-# Set default sink to auto_null (virtual)
-pactl set-default-sink auto_null
+# Main function
+main() {
+    # Check if PipeWire is running
+    if ! pgrep -x pipewire > /dev/null; then
+        echo -e "\033[0;31m[ERROR] PipeWire is not running. Please start your session first.\033[0m"
+        exit 1
+    fi
+    
+    create_virtual_sinks
+    setup_loopbacks
+    set_defaults
+    create_routing_rules
+    create_qpwgraph_preset
+    create_easyeffects_presets
+    test_audio
+    
+    echo ""
+    echo -e "${GREEN}🎵 WehttamSnaps audio setup complete!${NC}"
+    echo ""
+    echo -e "${YELLOW}📋 Audio sinks created:${NC}"
+    echo -e "   • Game (for gaming audio)"
+    echo -e "   • Media (for music/browser)"
+    echo -e "   • Chat (for Discord/VOIP)"
+    echo -e "   • Mix (for recording)"
+    echo ""
+    echo -e "${YELLOW}🔧 Tools to use:${NC}"
+    echo -e "   • EasyEffects: System audio effects"
+    echo -e "   • Qpwgraph: Audio routing and connections"
+    echo -e "   • Pavucontrol: Volume control"
+    echo ""
+    echo -e "${BLUE}💡 Next steps:${NC}"
+    echo -e "   1. Open Qpwgraph to verify connections"
+    echo -e "   2. Test with your favorite applications"
+    echo -e "   3. Adjust routing as needed"
+}
 
-echo "WehttamSnaps audio routing setup completed!"
-echo ""
-echo "Available commands:"
-echo "• ~/.config/wehttamsnaps/scripts/audio-presets.sh gaming"
-echo "• ~/.config/wehttamsnaps/scripts/audio-presets.sh streaming"
-echo "• ~/.config/wehttamsnaps/scripts/audio-presets.sh voicechat"
-echo "• ~/.config/wehttamsnaps/scripts/audio-presets.sh reset"
-echo "• qpwgraph (to manually adjust routing)"
-echo ""
-echo "Keybinds added:"
-echo "• SUPER+P → qpwgraph (audio routing GUI)"
-
-# Add keybinding to Hyprland config
-if ! grep -q "qpwgraph" ~/.config/hyprland/conf.d/06-bindings.conf; then
-    echo "bind = \$mod, P, exec, qpwgraph" >> ~/.config/hyprland/conf.d/06-bindings.conf
-    echo "Added qpwgraph keybinding to Hyprland config"
-fi
-
-# Show notification
-notify-send "WehttamSnaps Audio" "Audio routing configured" -a WehttamSnaps
+# Run setup
+main "$@"

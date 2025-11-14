@@ -1,62 +1,65 @@
 #!/bin/bash
 # === WEHTTAMSNAPS GAMEMODE TOGGLER ===
-# GitHub: https://github.com/Crowdrocker
+# Switch between performance and normal modes
 
-# Check if gamemode is currently active
-if pgrep -f "gamemoderun" > /dev/null; then
-    # Disable gamemode
-    echo "Disabling GameMode..."
+GAMING_CONFIG="$HOME/.config/wehttamsnaps/gaming-mode"
+NIRI_CONFIG="$HOME/.config/niri/config.kdl"
+EFFECTS_CONFIG="$HOME/.config/easyeffects/output.json"
+
+# Check current gaming mode state
+if [ -f "$GAMING_CONFIG" ]; then
+    # Turn OFF gaming mode
+    echo "🎮 Turning OFF gaming mode..."
     
-    # Kill gamemoderun processes
-    pkill -f "gamemoderun"
+    # Remove gaming config indicator
+    rm -f "$GAMING_CONFIG"
     
-    # Re-enable animations
-    hyprctl keyword animations:enabled true
+    # Restore normal animations
+    sed -i 's/enable false/enable true/g' "$HOME/.config/niri/conf.d/40-gaming.kdl"
     
-    # Re-enable blur
-    hyprctl keyword decoration:blur:enabled true
+    # Reset CPU governor
+    sudo cpupower frequency-set -g ondemand
     
-    # Restore normal performance
-    sudo systemctl stop auto-cpufreq 2>/dev/null
+    # Reset GPU profile
+    corectrl --set-profile "default" 2>/dev/null || true
     
-    # Restore normal CPU governor
-    sudo cpupower frequency-set -g powersave 2>/dev/null
+    # Enable EasyEffects
+    easyeffects --gapplication-service &
+    
+    # Restore normal gaps
+    sed -i 's/gaps 8/gaps 16/g' "$HOME/.config/niri/conf.d/40-gaming.kdl"
+    
+    # Restart Niri to apply changes
+    niri-msg action quit
     
     # Show notification
-    notify-send "GameMode Disabled" "Performance profile restored to normal" -a WehttamSnaps
+    notify-send "WehttamSnaps" "Gaming mode OFF - Performance normal" -u normal -i applications-games
     
-    echo "GameMode disabled"
 else
-    # Enable gamemode
-    echo "Enabling GameMode..."
+    # Turn ON gaming mode
+    echo "🚀 Turning ON gaming mode..."
     
-    # Start gamemoded if not running
-    if ! pgrep gamemoded > /dev/null; then
-        gamemoded &
-    fi
+    # Create gaming config indicator
+    touch "$GAMING_CONFIG"
     
     # Disable animations for better performance
-    hyprctl keyword animations:enabled false
+    sed -i 's/enable true/enable false/g' "$HOME/.config/niri/conf.d/40-gaming.kdl"
     
-    # Disable blur for better performance
-    hyprctl keyword decoration:blur:enabled false
+    # Set CPU governor to performance
+    sudo cpupower frequency-set -g performance
     
-    # Set performance CPU governor
-    sudo cpupower frequency-set -g performance 2>/dev/null
+    # Set GPU to performance mode
+    corectrl --set-profile "performance" 2>/dev/null || true
     
-    # Start auto-cpufreq for better performance
-    sudo systemctl start auto-cpufreq 2>/dev/null
+    # Disable EasyEffects for lower latency
+    pkill easyeffects
     
-    # Enable low latency mode for audio
-    pw-metadata -n settings 0 clock.force-rate 48000
+    # Reduce gaps for better game visibility
+    sed -i 's/gaps 16/gaps 8/g' "$HOME/.config/niri/conf.d/40-gaming.kdl"
+    
+    # Restart Niri to apply changes
+    niri-msg action quit
     
     # Show notification
-    notify-send "GameMode Enabled" "Performance profile optimized for gaming" -a WehttamSnaps
-    
-    echo "GameMode enabled"
+    notify-send "WehttamSnaps" "Gaming mode ON - Maximum performance!" -u critical -i applications-games
 fi
-
-# Apply changes
-hyprctl reload
-
-echo "GameMode toggle completed"

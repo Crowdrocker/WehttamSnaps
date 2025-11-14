@@ -1,0 +1,2 @@
+configs/webapps/loot.sh
+configs/webapps/nexusmods.sh

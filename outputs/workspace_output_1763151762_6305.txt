@@ -1,0 +1,8 @@
+configs/docs/modding-guide.md
+configs/niri/conf.d/35-modding.kdl
+configs/niri/conf.d/51-modding-keybinds.kdl
+configs/scripts/backup-modding-setup.sh
+configs/scripts/modding-keyhints.sh
+configs/scripts/setup-modding-workspace.sh
+configs/webapps/modding-discord.sh
+configs/webapps/modding-wiki.sh

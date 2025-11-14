@@ -1,0 +1,53 @@
+// === WEHTTAMSNAPS - USER OVERRIDES ===
+// Custom overrides and experimental settings
+// Add your personal modifications here
+
+// Example: Custom gaps
+// layout {
+//     gaps 20
+// }
+
+// Example: Custom animations
+// animations {
+//     slowdown 1.2
+// }
+
+// Example: Custom window rules
+// window-rule {
+//     match app-id="your-app"
+//     open-floating true
+// }
+
+// Example: Custom keybindings
+// bind-key {
+//     $mod "x" {
+//         spawn "your-custom-command"
+//     }
+// }
+
+// === EXPERIMENTAL SETTINGS ===
+// Uncomment these if you want to experiment
+
+// Disable focus ring entirely
+// layout {
+//     focus-ring { enable false }
+// }
+
+// Enable workspaces wraparound
+// workspace-behavior {
+//     wraparound true
+// }
+
+// Custom spawn-at-startup commands
+// spawn-at-startup "your-custom-daemon"
+
+// === PERFORMANCE TWEAKS ===
+// Uncomment for RX 580 optimization
+
+// Reduce compositor overhead
+// animations {
+//     enable false
+// }
+
+// Increase frame rate for gaming
+// framerate 120

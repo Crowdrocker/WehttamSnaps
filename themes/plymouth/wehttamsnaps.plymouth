@@ -1,8 +1,0 @@
-[Plymouth Theme]
-Name=WehttamSnaps
-Description=A professional Plymouth theme with animated WehttamSnaps logo
-ModuleName=script
-
-[script]
-ImageDir=/usr/share/plymouth/themes/wehttamsnaps
-ScriptFile=/usr/share/plymouth/themes/wehttamsnaps/wehttamsnaps.script

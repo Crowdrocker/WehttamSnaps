@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=WehttamSnaps
+Description=WehttamSnaps boot splash with spinning logo
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/wehttamsnaps
+ScriptFile=/usr/share/plymouth/themes/wehttamsnaps/wehttamsnaps.script

@@ -1,0 +1,78 @@
+// === WEHTTAMSNAPS - BASE NIRI CONFIGURATION ===
+// Basic Niri settings for optimal performance
+
+input {
+    keyboard {
+        repeat-delay 250
+        repeat-rate 25
+        layout {
+            // US keyboard layout
+            variant ""
+        }
+    }
+    
+    touchpad {
+        tap-to-press true
+        drag-to-press true
+        scroll-method "two-finger"
+        disable-while-typing true
+    }
+    
+    mouse {
+        natural-scroll false
+    }
+}
+
+output "eDP-1" {
+    // Laptop display settings
+    mode {
+        width 1920
+        height 1080
+        refresh 60.000
+    }
+    position x=0 y=0
+    scale 1.0
+    transform "normal"
+}
+
+output "HDMI-A-1" {
+    // External monitor settings
+    mode {
+        width 1920
+        height 1080
+        refresh 60.000
+    }
+    position x=1920 y=0
+    scale 1.0
+    transform "normal"
+}
+
+layout {
+    // Default layout settings
+    focus-ring {
+        width 4
+        inactive-color rgba(120, 120, 120, 0.4)
+        active-color rgba(106, 159, 219, 0.8)
+    }
+    
+    border {
+        width 2
+        inactive-color rgba(120, 120, 120, 0.6)
+        active-color rgba(106, 159, 219, 0.8)
+    }
+    
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        fixed 960
+    }
+    
+    center-focused-column "on-focused-monitor"
+    gaps 16
+}
+
+animations {
+    enable true
+    slowdown 1.0
+}

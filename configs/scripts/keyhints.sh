@@ -1,96 +1,126 @@
 #!/bin/bash
-# === WEHTTAMSNAPS KEYBINDINGS HELP ===
+# === WEHTTAMSNAPS KEYBINDING CHEAT SHEET ===
 # GitHub: https://github.com/Crowdrocker
-
-# GDK BACKEND. Change to either wayland or x11 if having issues
-BACKEND=wayland
+# Niri + Noctalia + Ghostty + WebApps
 
 # Check if rofi or yad is running and kill them if they are
 if pidof rofi > /dev/null; then
-  pkill rofi
+    pkill rofi
 fi
 
 if pidof yad > /dev/null; then
-  pkill yad
+    pkill yad
 fi
 
-# Launch yad with calculated width and height
-GDK_BACKEND=$BACKEND yad \
+# Launch yad with WehttamSnaps theming
+GDK_BACKEND=wayland yad \
     --center \
-    --title="WehttamSnaps Quick Cheat Sheet" \
+    --title="WehttamSnaps - Quick Cheat Sheet" \
     --no-buttons \
     --list \
     --column=Key: \
     --column=Description: \
     --column=Command: \
     --timeout-indicator=bottom \
-"ESC" "close this app" "" \
-" SPACE" "Application Launcher" "(Noctalia Shell)" \
-" D" "App Launcher" "(rofi-wayland)" \
-" S" "Control Center" "(Noctalia Shell)" \
-" ," "Settings" "(Noctalia Shell)" \
+"ESC" "close this app" "🗑️" \
+"⊞ = Super (Windows Key)" "(SUPER KEY)" "(SUPER KEY)" \
 "" "" "" \
-" ENTER" "Terminal" "(Ghostty)" \
-" SHIFT ENTER" "New Tab" "(Ghostty)" \
-" B" "Web Browser" "(Firefox)" \
-" C" "Code Editor" "(VS Code)" \
-" E" "File Manager" "(Thunar)" \
-" Q" "Close Window" "(active)" \
-" SHIFT Q" "Kill Window" "(force)" \
-" F" "Fullscreen" "(toggle)" \
-" SHIFT F" "Fake Fullscreen" "(toggle)" \
-" T" "Float Window" "(toggle)" \
-" SHIFT T" "Float All Windows" "(toggle)" \
+"=== CORE APPLICATIONS ===" "" "" \
+"⊞ ENTER" "Ghostty Terminal" "(Fira Code font)" \
+"⊞ D" "App Launcher" "(Fuzzel)" \
+"⊞ SPACE" "QuickShell Launcher" "(Noctalia Shell)" \
+"⊞ B" "Brave Browser" "(Default browser)" \
+"⊞ F" "File Manager" "(Thunar)" \
+"⊞ E" "VS Code Editor" "(Development)" \
+"⊞ Q" "Close active window" "(Not kill)" \
+"⊞ SHIFT Q" "Kill active window" "(Force close)" \
 "" "" "" \
-" V" "Clipboard Manager" "(Noctalia)" \
-" H" "Show This Help" "(Keybinds)" \
-" W" "Wallpaper Menu" "(Swww)" \
-" SHIFT W" "Random Wallpaper" "(Swww)" \
-" M" "Theme Switcher" "(WehttamSnaps)" \
-" SHIFT M" "Theme Effects" "(Swww)" \
+"=== NOCTALIA SHELL ===" "" "" \
+"⊞ S" "Control Center" "(Noctalia settings)" \
+"⊞ COMMA" "Settings Panel" "(QuickShell config)" \
+"⊞ H" "This Help Screen" "(Key hints)" \
+"⊞ V" "Clipboard Manager" "(ClipHist)" \
 "" "" "" \
-"PRINT" "Screenshot" "(Fullscreen)" \
-" PRINT" "Screenshot Region" "(Grimblast)" \
-" SHIFT PRINT" "Screenshot Active" "(Window)" \
+"=== PHOTOGRAPHY & DESIGN ===" "" "" \
+"⊞ SHIFT D" "Darktable" "(Photo editing)" \
+"⊞ SHIFT R" "RawTherapee" "(RAW processing)" \
+"⊞ SHIFT G" "GIMP" "(Image editing)" \
+"⊞ SHIFT I" "Inkscape" "(Vector graphics)" \
+"⊞ SHIFT K" "Krita" "(Digital painting)" \
 "" "" "" \
-" SHIFT G" "Toggle Gamemode" "(Performance)" \
-" ALT G" "Gamescope Launcher" "(Gaming)" \
-" CTRL G" "Launch Steam" "(Gaming)" \
-" CTRL SHIFT G" "Launch Lutris" "(Gaming)" \
+"=== GAMING & STREAMING ===" "" "" \
+"⊞ SHIFT G" "Toggle Game Mode" "(Performance mode)" \
+"⊞ SHIFT S" "Steam" "(Gaming platform)" \
+"⊞ SHIFT O" "OBS Studio" "(Streaming/recording)" \
+"⊞ SHIFT L" "Lutris" "(Game launcher)" \
 "" "" "" \
-" 1-0" "Switch Workspace" "(1-10)" \
-" SHIFT 1-0" "Move Window to Workspace" "(1-10)" \
-" ALT TAB" "Switch Windows" "(Alt+Tab)" \
-"  TAB" "Cycle Groups" "(Window Groups)" \
+"=== WEBAPPS ===" "" "" \
+"⊞ SHIFT Y" "YouTube WebApp" "(Focused experience)" \
+"⊞ SHIFT T" "Twitch WebApp" "(Streaming platform)" \
+"⊞ SHIFT M" "Music WebApp" "(Spotify/YouTube Music)" \
+"⊞ SHIFT D" "Discord WebApp" "(Communication)" \
+"⊞ SHIFT N" "Notion WebApp" "(Productivity)" \
 "" "" "" \
-" ARROWS" "Move Focus" "(Directional)" \
-" SHIFT ARROWS" "Move Window" "(Directional)" \
-" ALT ARROWS" "Resize Window" "(Directional)" \
+"=== WINDOW MANAGEMENT ===" "" "" \
+"⊞ F" "Toggle Fullscreen" "(Current window)" \
+"⊞ SHIFT F" "Maximize Column" "(Current column)" \
+"⊞ SPACE" "Toggle Float" "(Single window)" \
+"⊞ SHIFT SPACE" "Toggle All Float" "(All windows)" \
+"⊞ ALT TAB" "Switch Windows" "(Window switcher)" \
+"⊞ ALT SHIFT TAB" "Reverse Switch" "(Opposite direction)" \
 "" "" "" \
-" CTRL B" "Toggle Waybar" "(Backup Shell)" \
-" CTRL L" "Lock Screen" "(Noctalia)" \
-" CTRL R" "Reboot System" "(Systemd)" \
-" CTRL DELETE" "Power Off" "(Systemd)" \
+"=== WORKSPACE MANAGEMENT ===" "" "" \
+"⊞ 1-9" "Switch to Workspace" "(Direct navigation)" \
+"⊞ SHIFT 1-9" "Move to Workspace" "(Move current window)" \
+"⊞ 0" "Switch to Workspace 10" "(Last workspace)" \
+"⊞ ALT F4" "Close Workspace" "(Current workspace)" \
 "" "" "" \
-"Audio Controls:" "" "" \
-"XF86AudioRaiseVolume" "Volume Up" "(Pamixer)" \
-"XF86AudioLowerVolume" "Volume Down" "(Pamixer)" \
-"XF86AudioMute" "Mute Output" "(Pamixer)" \
-"XF86AudioMicMute" "Mute Input" "(Pamixer)" \
-"XF86AudioPlay" "Play/Pause" "(Playerctl)" \
-"XF86AudioNext" "Next Track" "(Playerctl)" \
-"XF86AudioPrev" "Previous Track" "(Playerctl)" \
+"=== SCREENSHOTS & RECORDING ===" "" "" \
+"PRINT" "Screenshot All" "(Save to Pictures)" \
+"⊞ PRINT" "Screenshot Region" "(Select area)" \
+"SHIFT PRINT" "Start Recording" "(Save to Videos)" \
+"CTRL PRINT" "Screenshot Timer (5s)" "(Delayed capture)" \
+"CTRL SHIFT PRINT" "Screenshot Timer (10s)" "(Longer delay)" \
+"ALT PRINT" "Active Window Shot" "(Current window)" \
 "" "" "" \
-"Display Controls:" "" "" \
-"XF86MonBrightnessUp" "Brightness Up" "(Brightnessctl)" \
-"XF86MonBrightnessDown" "Brightness Down" "(Brightnessctl)" \
+"=== AUDIO CONTROLS (Noctalia) ===" "" "" \
+"XF86AudioRaiseVolume" "Volume Up" "(System volume)" \
+"XF86AudioLowerVolume" "Volume Down" "(System volume)" \
+"XF86AudioMute" "Mute Output" "(Toggle mute)" \
+"XF86AudioPlay" "Play/Pause" "(Media control)" \
+"XF86AudioNext" "Next Track" "(Media control)" \
+"XF86AudioPrev" "Previous Track" "(Media control)" \
 "" "" "" \
-"WehttamSnaps Webapps:" "" "" \
-" CTRL Y" "YouTube" "(Firefox)" \
-" CTRL T" "Twitch" "(Firefox)" \
-" CTRL D" "Discord" "(Firefox)" \
-" CTRL G" "GitHub" "(Firefox)" \
+"=== SYSTEM CONTROLS ===" "" "" \
+"CTRL ALT L" "Lock Screen" "(Hyprlock)" \
+"CTRL ALT DELETE" "Logout Menu" "(Wlogout)" \
+"CTRL ALT B" "Toggle Bar" "(Noctalia visibility)" \
+"CTRL ALT R" "Reload Config" "(Niri restart)" \
+"CTRL ALT T" "Terminal (Advanced)" "(System tools)" \
 "" "" "" \
-"More info:" "https://github.com/Crowdrocker" "WehttamSnaps" \
+"=== DISPLAY & BRIGHTNESS ===" "" "" \
+"XF86MonBrightnessUp" "Brightness Up" "(Monitor control)" \
+"XF86MonBrightnessDown" "Brightness Down" "(Monitor control)" \
+"⊞ SHIFT W" "Choose Wallpaper" "(Wallpaper menu)" \
+"CTRL ALT W" "Random Wallpaper" "(Swww daemon)" \
 "" "" "" \
-"WehttamSnaps v1.0.0" "Professional Arch Linux Setup" "Hyprland + Noctalia"
+"=== GAMING OPTIMIZATIONS ===" "" "" \
+"⊞ SHIFT G" "Game Mode ON/OFF" "(Performance toggles)" \
+"⊞ CTRL G" "GPU Control" "(CoreCtrl for RX 580)" \
+"⊞ ALT G" "Gamescope Launcher" "(Optimized gaming)" \
+"" "" "" \
+"=== PHOTOGRAPHY WORKFLOW ===" "" "" \
+"⊞ SHIFT D" "Darktable" "(Professional editing)" \
+"⊞ SHIFT R" "RawTherapee" "(RAW conversion)" \
+"⊞ SHIFT F" "FastStone Viewer" "(Quick review)" \
+"⊞ SHIFT P" "PhotoPea WebApp" "(Online editor)" \
+"" "" "" \
+"=== DEVELOPMENT SHORTCUTS ===" "" "" \
+"⊞ E" "VS Code" "(Main editor)" \
+"⊞ SHIFT E" "Neovim" "(Terminal editor)" \
+"⊞ ALT E" "Ghostty (dev)" "(Dev terminal)" \
+"⊞ G" "Git GUI" "(GitHub Desktop)" \
+"" "" "" \
+"=== MORE INFO ===" "" "" \
+"WehttamSnaps GitHub" "https://github.com/Crowdrocker" "(Full documentation)" \
+"WehttamSnaps YouTube" "https://youtube.com/@WehttamSnaps" "(Video tutorials)"

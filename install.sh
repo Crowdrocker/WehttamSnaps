@@ -1,9 +1,9 @@
 #!/bin/bash
-# === WEHTTAMSNAPS INSTALLATION SCRIPT ===
+# === WEHTTAMSNAPS INSTALLER ===
 # GitHub: https://github.com/Crowdrocker
-# Professional Arch Linux Hyprland Setup Installer
+# Arch Linux Niri + Noctalia + Ghostty Setup
 
-set -e
+set -euo pipefail
 
 # Colors for output
 RED='\033[0;31m'
@@ -14,369 +14,369 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# WehttamSnaps branding
-WS_VERSION="1.0.0"
-WS_REPO="https://github.com/Crowdrocker/WehttamSnaps"
-
-# Helper functions
-print_banner() {
-    clear
+# ASCII Art Logo
+show_logo() {
     echo -e "${PURPLE}"
-    echo "╔══════════════════════════════════════════════════════════════╗"
-    echo "║                                                              ║"
-    echo "║     ██╗  ██╗ ██████╗ ██╗   ██╗███████╗████████╗               ║"
-    echo "║     ██║ ██╔╝██╔═══██╗██║   ██║██╔════╝╚══██╔══╝               ║"
-    echo "║     █████╔╝ ██║   ██║██║   ██║█████╗     ██║                  ║"
-    echo "║     ██╔═██╗ ██║   ██║╚██╗ ██╔╝██╔══╝     ██║                  ║"
-    echo "║     ██║  ██╗╚██████╔╝ ╚████╔╝ ███████╗   ██║                  ║"
-    echo "║     ╚═╝  ╚═╝ ╚═════╝   ╚═══╝  ╚══════╝   ╚═╝                  ║"
-    echo "║                                                              ║"
-    echo "║                     WehttamSnaps                             ║"
-    echo "║                Professional Arch Linux Setup                 ║"
-    echo "║                                                              ║"
-    echo "║     GitHub: https://github.com/Crowdrocker                  ║"
-    echo "╚══════════════════════════════════════════════════════════════╝"
+    cat << "EOF"
+    ██╗  ██╗███████╗██████╗ ██████╗ ██╗    ██╗
+    ██║  ██║██╔════╝██╔══██╗██╔══██╗██║    ██║
+    ███████║█████╗  ██████╔╝██████╔╝██║ █╗ ██║
+    ██╔══██║██╔══╝  ██╔══██╗██╔══██╗██║███╗██║
+    ██║  ██║███████╗██║  ██║██║  ██║╚███╔███╔╝
+    ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ 
+                                           
+               ██████╗ ██████╗ ███╗   ██╗██╗
+              ██╔════╝██╔═══██╗████╗  ██║██║
+              ██║     ██║   ██║██╔██╗ ██║██║
+              ██║     ██║   ██║██║╚██╗██║╚═╝
+              ╚██████╗╚██████╔╝██║ ╚████║██╗
+               ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝
+EOF
     echo -e "${NC}"
-    echo -e "${CYAN}WehttamSnaps v${WS_VERSION} - Professional Arch Linux Hyprland Setup${NC}"
-    echo -e "${CYAN}Repository: ${WS_REPO}${NC}"
+    echo -e "${CYAN}Professional Arch Linux Niri Setup for Photography & Gaming${NC}"
+    echo -e "${CYAN}GitHub: https://github.com/Crowdrocker${NC}"
     echo ""
-}
-
-print_status() {
-    echo -e "${BLUE}[INFO]${NC} $1"
-}
-
-print_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
-}
-
-print_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
-
-print_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
 }
 
 # Check if running as root
 check_root() {
     if [[ $EUID -eq 0 ]]; then
-        print_error "This script should not be run as root!"
+        echo -e "${RED}ERROR: Do not run as root! This installer should be run as a regular user.${NC}"
         exit 1
     fi
 }
 
-# Check if on Arch Linux
+# Check if running on Arch Linux
 check_arch() {
     if ! command -v pacman &> /dev/null; then
-        print_error "This script is designed for Arch Linux!"
+        echo -e "${RED}ERROR: This installer is designed for Arch Linux only!${NC}"
         exit 1
     fi
 }
 
-# Check internet connection
+# Check for internet connection
 check_internet() {
-    if ! ping -c 1 archlinux.org &> /dev/null; then
-        print_error "No internet connection available!"
+    if ! ping -c 1 google.com &> /dev/null; then
+        echo -e "${RED}ERROR: No internet connection detected!${NC}"
         exit 1
     fi
 }
 
-# Install yay AUR helper if not present
-install_yay() {
-    if ! command -v yay &> /dev/null; then
-        print_status "Installing yay AUR helper..."
-        git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
-        cd /tmp/yay-bin
-        makepkg -si --noconfirm
-        cd -
-        rm -rf /tmp/yay-bin
-        print_success "yay installed successfully"
-    else
-        print_status "yay is already installed"
+# Install AUR helper if not present
+install_aur_helper() {
+    echo -e "${BLUE}[INFO] Installing AUR helper...${NC}"
+    
+    if command -v paru &> /dev/null; then
+        echo -e "${GREEN}[OK] Paru already installed${NC}"
+        return
     fi
+    
+    echo -e "${YELLOW}[INSTALL] Installing paru...${NC}"
+    sudo pacman -S --needed --noconfirm base-devel git
+    
+    temp_dir=$(mktemp -d)
+    cd "$temp_dir"
+    git clone https://aur.archlinux.org/paru-bin.git
+    cd paru-bin
+    makepkg -si --noconfirm
+    
+    cd "$HOME"
+    rm -rf "$temp_dir"
+    
+    echo -e "${GREEN}[OK] AUR helper installed${NC}"
 }
 
 # Install core packages
-install_core_packages() {
-    print_status "Installing core packages..."
+install_packages() {
+    echo -e "${BLUE}[INFO] Installing core packages...${NC}"
     
-    # Update package database
-    sudo pacman -Syu --noconfirm
-    
-    # Install packages from core.txt
-    if [[ -f "packages/core.txt" ]]; then
-        while IFS= read -r package; do
-            # Skip comments and empty lines
-            [[ $package =~ ^#.*$ ]] && continue
-            [[ -z "$package" ]] && continue
-            
-            print_status "Installing $package..."
-            
-            # Try with pacman first, then yay for AUR packages
-            if sudo pacman -S --needed --noconfirm "$package" 2>/dev/null; then
-                print_success "$package installed"
-            elif yay -S --needed --noconfirm "$package" 2>/dev/null; then
-                print_success "$package installed from AUR"
-            else
-                print_warning "$package could not be installed"
-            fi
-        done < "packages/core.txt"
-    fi
-}
-
-# Install optional packages
-install_optional_packages() {
-    print_warning "Optional packages installation (may take a while)..."
-    read -p "Do you want to install optional packages? (y/N): " -n 1 -r
-    echo
-    
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        if [[ -f "packages/optional.txt" ]]; then
-            while IFS= read -r package; do
-                # Skip comments and empty lines
-                [[ $package =~ ^#.*$ ]] && continue
-                [[ -z "$package" ]] && continue
-                
-                print_status "Installing optional $package..."
-                
-                if yay -S --needed --noconfirm "$package" 2>/dev/null; then
-                    print_success "$package installed"
-                else
-                    print_warning "$package could not be installed"
-                fi
-            done < "packages/optional.txt"
+    # Install packages from core list
+    while IFS= read -r package; do
+        # Skip comments and empty lines
+        [[ "$package" =~ ^#.*$ ]] && continue
+        [[ -z "$package" ]] && continue
+        
+        echo -e "${YELLOW}[INSTALL] $package${NC}"
+        
+        if paru -S --needed --noconfirm "$package"; then
+            echo -e "${GREEN}[OK] $package installed${NC}"
+        else
+            echo -e "${RED}[FAIL] Failed to install $package${NC}"
         fi
-    fi
+    done < configs/packages/core-packages.txt
+    
+    echo -e "${GREEN}[OK] Core packages installed${NC}"
 }
 
-# Setup configuration files
-setup_configs() {
-    print_status "Setting up configuration files..."
+# Setup directories
+setup_directories() {
+    echo -e "${BLUE}[INFO] Setting up directories...${NC}"
     
-    # Create necessary directories
-    mkdir -p ~/.config/wehttamsnaps/{logs,backups}
-    mkdir -p ~/.config/{hyprland,ghostty,noctalia,waybar}
-    mkdir -p ~/Pictures/{Screenshots,Wallpapers}
-    mkdir -p ~/Games
+    directories=(
+        "$HOME/.config/wehttamsnaps"
+        "$HOME/.config/wehttamsnaps/scripts"
+        "$HOME/.config/wehttamsnaps/webapps"
+        "$HOME/.config/wehttamsnaps/assets"
+        "$HOME/.config/wehttamsnaps/themes"
+        "$HOME/.config/wehttamsnaps/wallpapers"
+        "$HOME/.config/niri/conf.d"
+        "$HOME/.config/ghostty"
+        "$HOME/Pictures/Screenshots"
+        "$HOME/Videos/Screencasts"
+    )
     
-    # Backup existing configs
-    if [[ -d ~/.config/hyprland ]]; then
-        mv ~/.config/hyprland ~/.config/wehttamsnaps/backups/hyprland.bak.$(date +%Y%m%d_%H%M%S)
-    fi
-    
-    # Symlink configuration files
-    ln -sf "$(pwd)/configs/hyprland" ~/.config/hyprland
-    ln -sf "$(pwd)/configs/ghostty" ~/.config/ghostty
-    ln -sf "$(pwd)/configs/noctalia" ~/.config/noctalia
-    ln -sf "$(pwd)/configs/waybar" ~/.config/waybar
-    ln -sf "$(pwd)/configs/scripts" ~/.config/wehttamsnaps/scripts
-    
-    # Copy logos and assets
-    mkdir -p ~/.config/wehttamsnaps/assets/{logos,sounds,fonts}
-    cp -r assets/* ~/.config/wehttamsnaps/assets/ 2>/dev/null || true
-    
-    # Create VERSION file
-    echo "$WS_VERSION" > ~/.config/wehttamsnaps/VERSION
-    
-    print_success "Configuration files set up"
+    for dir in "${directories[@]}"; do
+        mkdir -p "$dir"
+        echo -e "${GREEN}[OK] Created $dir${NC}"
+    done
 }
 
-# Setup SDDM theme
-setup_sddm() {
-    print_status "Setting up SDDM theme..."
+# Copy configuration files
+copy_configs() {
+    echo -e "${BLUE}[INFO] Installing configuration files...${NC}"
     
-    sudo systemctl enable sddm
-    sudo sddm-example-config --install
+    # Niri configuration
+    cp -r configs/niri/* "$HOME/.config/niri/"
+    echo -e "${GREEN}[OK] Niri configuration installed${NC}"
     
-    # Set SDDM theme if available
-    if pacman -Qi sddm-sugar-candy-git &> /dev/null; then
-        sudo mkdir -p /etc/sddm.conf.d
-        echo "[Theme]" | sudo tee /etc/sddm.conf.d/theme.conf > /dev/null
-        echo "Current=sugar-candy" | sudo tee -a /etc/sddm.conf.d/theme.conf > /dev/null
-        print_success "SDDM theme set to sugar-candy"
+    # Ghostty configuration
+    cp configs/ghostty/config "$HOME/.config/ghostty/"
+    echo -e "${GREEN}[OK] Ghostty configuration installed${NC}"
+    
+    # Scripts
+    cp configs/scripts/*.sh "$HOME/.config/wehttamsnaps/scripts/"
+    chmod +x "$HOME/.config/wehttamsnaps/scripts/"*.sh
+    echo -e "${GREEN}[OK] Scripts installed${NC}"
+    
+    # Webapps
+    cp configs/webapps/*.sh "$HOME/.config/wehttamsnaps/webapps/"
+    chmod +x "$HOME/.config/wehttamsnaps/webapps/"*.sh
+    echo -e "${GREEN}[OK] Webapps installed${NC}"
+    
+    # Plymouth theme
+    if [[ -d configs/plymouth ]]; then
+        sudo mkdir -p /usr/share/plymouth/themes/wehttamsnaps
+        sudo cp configs/plymouth/* /usr/share/plymouth/themes/wehttamsnaps/
+        sudo cp ws-logo.png /usr/share/plymouth/themes/wehttamsnaps/
+        sudo cp reactor.png /usr/share/plymouth/themes/wehttamsnaps/
+        echo -e "${GREEN}[OK] Plymouth theme installed${NC}"
     fi
+    
+    # Assets
+    cp *.png "$HOME/.config/wehttamsnaps/assets/"
+    echo -e "${GREEN}[OK] Assets copied${NC}"
+}
+
+# Setup services
+setup_services() {
+    echo -e "${BLUE}[INFO] Setting up services...${NC}"
+    
+    # Enable services
+    services=(
+        "gdm"
+        "NetworkManager"
+        "bluetooth"
+        " cups"
+    )
+    
+    for service in "${services[@]}"; do
+        sudo systemctl enable "$service" 2>/dev/null || true
+        echo -e "${GREEN}[OK] Enabled $service${NC}"
+    done
+    
+    # Enable user services
+    user_services=(
+        "pipewire"
+        "pipewire-pulse"
+        "wireplumber"
+    )
+    
+    for service in "${user_services[@]}"; do
+        systemctl --user enable "$service" 2>/dev/null || true
+        echo -e "${GREEN}[OK] Enabled user service $service${NC}"
+    done
 }
 
 # Setup Plymouth theme
 setup_plymouth() {
-    print_status "Setting up Plymouth theme..."
+    echo -e "${BLUE}[INFO] Setting up Plymouth theme...${NC}"
     
-    if command -v plymouth &> /dev/null; then
-        sudo systemctl enable plymouth-quit-wait.service
-        
-        # Create WehttamSnaps Plymouth theme directory
-        sudo mkdir -p /usr/share/plymouth/themes/wehttamsnaps
-        
-        # Copy theme files if available
-        if [[ -d "themes/plymouth" ]]; then
-            sudo cp -r themes/plymouth/* /usr/share/plymouth/themes/wehttamsnaps/
-            
-            # Set Plymouth theme
-            sudo plymouth-set-default-theme -R wehttamsnaps
-            print_success "Plymouth theme set to WehttamSnaps"
-        fi
+    # Install plymouth if not present
+    if ! command -v plymouth &> /dev/null; then
+        sudo pacman -S --noconfirm plymouth
+    fi
+    
+    # Set up WehttamSnaps theme
+    sudo plymouth-set-default-theme -R wehttamsnaps
+    
+    # Update GRUB for Plymouth
+    if sudo grep -q "GRUB_CMDLINE_LINUX_DEFAULT=" /etc/default/grub; then
+        sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash quiet/' /etc/default/grub
     else
-        print_warning "Plymouth not installed, skipping theme setup"
+        echo 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"' | sudo tee -a /etc/default/grub
+    fi
+    
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    
+    echo -e "${GREEN}[OK] Plymouth theme configured${NC}"
+}
+
+# Create VERSION file
+create_version() {
+    echo "1.0.0" > "$HOME/.config/wehttamsnaps/VERSION"
+    echo -e "${GREEN}[OK] Version file created${NC}"
+}
+
+# Setup shell
+setup_shell() {
+    echo -e "${BLUE}[INFO] Setting up shell...${NC}"
+    
+    # Change to Zsh if available
+    if command -v zsh &> /dev/null; then
+        chsh -s /bin/zsh
+        echo -e "${GREEN}[OK] Shell changed to Zsh${NC}"
+    fi
+    
+    # Setup Starship prompt
+    if command -v starship &> /dev/null; then
+        echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
+        echo -e "${GREEN}[OK] Starship prompt configured${NC}"
     fi
 }
 
-# Setup user services
-setup_services() {
-    print_status "Setting up user services..."
+# Final optimizations
+optimize_system() {
+    echo -e "${BLUE}[INFO] Applying system optimizations...${NC}"
     
-    # Enable user services
-    systemctl --user enable pipewire pipewire-pulse 2>/dev/null || true
-    systemctl --user enable wireplumber 2>/dev/null || true
+    # Enable performance governor for gaming
+    echo "options cpufreq.default_governor=ondemand" | sudo tee -a /etc/modprobe.d/cpufreq.conf
     
-    # Enable system services
-    sudo systemctl enable auto-cpufreq 2>/dev/null || true
-    sudo systemctl enable thermald 2>/dev/null || true
-    sudo systemctl enable gamemoded 2>/dev/null || true
+    # Enable user namespaces
+    echo "user.max_user_namespaces=150000" | sudo tee -a /etc/sysctl.d/99-userns.conf
     
-    print_success "Services configured"
+    # Add user to required groups
+    sudo usermod -a -G video,audio,input,docker "$USER"
+    
+    echo -e "${GREEN}[OK] System optimizations applied${NC}"
 }
 
-# Setup gaming optimizations
-setup_gaming() {
-    print_status "Setting up gaming optimizations..."
+# Create desktop entry for WehttamSnaps
+create_desktop_entry() {
+    echo -e "${BLUE}[INFO] Creating desktop entry...${NC}"
     
-    # Create directories for games
-    mkdir -p ~/Games/{Steam,Lutris,Gamescope}
-    
-    # Copy gaming scripts
-    cp configs/scripts/gaming-setup.sh ~/.config/wehttamsnaps/scripts/
-    cp configs/scripts/toggle-gamemode.sh ~/.config/wehttamsnaps/scripts/
-    
-    # Make scripts executable
-    chmod +x ~/.config/wehttamsnaps/scripts/gaming-*.sh
-    chmod +x ~/.config/wehttamsnaps/scripts/toggle-*.sh
-    
-    # Run gaming setup
-    ~/.config/wehttamsnaps/scripts/gaming-setup.sh
-    
-    print_success "Gaming optimizations configured"
-}
-
-# Create desktop entries
-create_desktop_entries() {
-    print_status "Creating desktop entries..."
-    
-    # Create WehttamSnaps welcome desktop entry
-    cat > ~/.local/share/applications/wehttamsnaps-welcome.desktop << EOF
+    cat > "$HOME/.local/share/applications/wehttamsnaps.desktop" << EOF
 [Desktop Entry]
-Version=1.0
-Type=Application
-Name=WehttamSnaps Welcome
-Comment=WehttamSnaps Setup and Information
-Exec=python3 ~/.config/wehttamsnaps/scripts/welcome.py
-Icon=preferences-desktop-theme-global
+Name=WehttamSnaps
+Comment=WehttamSnaps Configuration Tool
+Exec=python3 $HOME/.config/wehttamsnaps/scripts/welcome.py --force
+Icon=applications-system
 Terminal=false
+Type=Application
 Categories=System;Settings;
-StartupNotify=false
 EOF
-
-    # Create WehttamSnaps keyhints desktop entry
-    cat > ~/.local/share/applications/wehttamsnaps-keyhints.desktop << EOF
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=WehttamSnaps Keybinds
-Comment=Show WehttamSnaps keyboard shortcuts
-Exec=~/.config/wehttamsnaps/scripts/keyhints.sh
-Icon=preferences-desktop-keyboard
-Terminal=false
-Categories=System;Documentation;
-StartupNotify=false
-EOF
-
-    print_success "Desktop entries created"
+    
+    echo -e "${GREEN}[OK] Desktop entry created${NC}"
 }
 
-# Final setup
-finalize_setup() {
-    print_status "Finalizing setup..."
-    
-    # Update shell configuration
-    if ! grep -q "WehttamSnaps" ~/.zshrc 2>/dev/null; then
-        echo "# WehttamSnaps Configuration" >> ~/.zshrc
-        echo "export WS_CONFIG_DIR=\$HOME/.config/wehttamsnaps" >> ~/.zshrc
-        echo "export PATH=\$PATH:\$WS_CONFIG_DIR/scripts" >> ~/.zshrc
-    fi
-    
-    # Set default browser
-    xdg-settings set default-web-browser firefox.desktop
-    
-    # Create desktop shortcuts
-    mkdir -p ~/Desktop
-    ln -sf ~/.local/share/applications/wehttamsnaps-welcome.desktop ~/Desktop/ 2>/dev/null || true
-    
-    # Set permissions
-    chmod +x ~/.config/wehttamsnaps/scripts/*.sh
-    chmod +x ~/.config/wehttamsnaps/scripts/*.py
-    
-    print_success "Setup finalized"
-}
-
-# Show completion message
-show_completion() {
-    print_success "WehttamSnaps installation completed successfully!"
+# Display final message
+show_final_message() {
     echo ""
-    echo -e "${CYAN}=== WEHTTAMSNAPS SETUP COMPLETE ===${NC}"
+    echo -e "${GREEN}╔══════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${GREEN}║                    🎉 INSTALLATION COMPLETE! 🎉                ║${NC}"
+    echo -e "${GREEN}╚══════════════════════════════════════════════════════════════╝${NC}"
     echo ""
-    echo -e "${GREEN}🚀 What's next:${NC}"
-    echo "1. Reboot your system to load all configurations"
-    echo "2. The welcome app will appear on first login"
-    echo "3. Press SUPER+H to view all keybinds"
-    echo "4. Use SUPER+SHIFT+G to toggle gamemode"
+    echo -e "${CYAN}WehttamSnaps has been successfully installed on your system!${NC}"
     echo ""
-    echo -e "${GREEN}📚 Documentation:${NC}"
-    echo "• README.md for full documentation"
-    echo "• configs/hyprland/conf.d/ for configuration"
-    echo "• ~/.config/wehttamsnaps/scripts/ for utilities"
+    echo -e "${YELLOW}📋 NEXT STEPS:${NC}"
+    echo -e "   1. Reboot your system to apply all changes"
+    echo -e "   2. Select Niri from your display manager"
+    echo -e "   3. The WehttamSnaps welcome app will start automatically"
+    echo -e "   4. Press SUPER + H anytime to view keybinds"
     echo ""
-    echo -e "${GREEN}🎮 Gaming:${NC}"
-    echo "• Steam is configured with optimizations"
-    echo "• Game launch scripts are in ~/Games/"
-    echo "• Division 2 and Cyberpunk 2077 fixes applied"
+    echo -e "${YELLOW}🎮 GAMING OPTIMIZATIONS:${NC}"
+    echo -e "   • RX 580 drivers configured"
+    echo -e "   • Vulkan support enabled"
+    echo -e "   • Gaming mode toggle: SUPER + SHIFT + G"
+    echo -e "   • CoreCtrl for GPU control: SUPER + CTRL + G"
     echo ""
-    echo -e "${GREEN}🎨 Customization:${NC}"
-    echo "• Edit configs/hyprland/conf.d/99-overrides.conf for personal tweaks"
-    echo "• Wallpapers go in ~/Pictures/Wallpapers/"
-    echo "• Custom scripts go in ~/.config/wehttamsnaps/scripts/"
+    echo -e "${YELLOW}📸 PHOTOGRAPHY WORKFLOW:${NC}"
+    echo -e "   • Darktable: SUPER + SHIFT + D"
+    echo -e "   • RawTherapee: SUPER + SHIFT + R"
+    echo -e "   • GIMP: SUPER + SHIFT + G"
+    echo -e "   • Inkscape: SUPER + SHIFT + I"
     echo ""
-    echo -e "${PURPLE}Thank you for using WehttamSnaps!${NC}"
-    echo -e "${PURPLE}GitHub: https://github.com/Crowdrocker${NC}"
+    echo -e "${YELLOW}🌐 WEBAPPS:${NC}"
+    echo -e "   • YouTube: SUPER + SHIFT + Y"
+    echo -e "   • Twitch: SUPER + SHIFT + T"
+    echo -e "   • Music: SUPER + SHIFT + M"
+    echo -e "   • Discord: SUPER + SHIFT + D"
     echo ""
-    
-    read -p "Press Enter to continue or Ctrl+C to exit..."
+    echo -e "${PURPLE}📚 DOCUMENTATION & SUPPORT:${NC}"
+    echo -e "   • GitHub: https://github.com/Crowdrocker"
+    echo -e "   • YouTube: https://youtube.com/@WehttamSnaps"
+    echo -e "   • Configs: ~/.config/wehttamsnaps/"
+    echo ""
+    echo -e "${GREEN}Thank you for choosing WehttamSnaps! Enjoy your new setup! 🚀${NC}"
+    echo ""
 }
 
 # Main installation function
 main() {
-    print_banner
+    show_logo
     
-    print_status "Starting WehttamSnaps installation..."
+    echo -e "${BLUE}[INFO] Starting WehttamSnaps installation...${NC}"
     
-    # Check prerequisites
+    # Pre-install checks
     check_root
     check_arch
     check_internet
     
     # Installation steps
-    install_yay
-    install_core_packages
-    install_optional_packages
-    setup_configs
-    setup_sddm
-    setup_plymouth
+    install_aur_helper
+    install_packages
+    setup_directories
+    copy_configs
     setup_services
-    setup_gaming
-    create_desktop_entries
-    finalize_setup
+    setup_plymouth
+    create_version
+    setup_shell
+    optimize_system
+    create_desktop_entry
     
-    show_completion
+    show_final_message
 }
 
-# Run installation
+# Handle script arguments
+case "${1:-}" in
+    --help|-h)
+        echo "WehttamSnaps Installer"
+        echo "Usage: $0 [options]"
+        echo "Options:"
+        echo "  --help, -h     Show this help message"
+        echo "  --no-plymouth  Skip Plymouth theme installation"
+        exit 0
+        ;;
+    --no-plymouth)
+        echo -e "${YELLOW}[INFO] Skipping Plymouth theme installation${NC}"
+        # Remove Plymouth setup from main function
+        main() {
+            show_logo
+            check_root
+            check_arch
+            check_internet
+            install_aur_helper
+            install_packages
+            setup_directories
+            copy_configs
+            setup_services
+            create_version
+            setup_shell
+            optimize_system
+            create_desktop_entry
+            show_final_message
+        }
+        ;;
+esac
+
+# Run main installation
 main "$@"
